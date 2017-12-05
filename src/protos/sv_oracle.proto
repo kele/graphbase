@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package protos.services;
+import "graph.proto";
+
+// Oracle answers questions about graphs.
+service Oracle {
+    // GetGraphs returns the graphs retrieved using GraphInputSpec that pass the
+    // given predicate.
+    rpc GetGraphs(GraphsRequest) returns (stream Graph) {}
+
+    // GetCount returns the count of graphs retrieved using GraphInputSpec that
+    // pass the given predicate.
+    rpc GetCount(GraphsRequest) returns (Count) {}
+}
+
+// GraphsRequest is the request type for Oracle.GetGraphs and Oracle.GetCount RPCs.
+// Next ID = 4
+message GraphsRequest {
+    // Contains the input specification.
+    GraphInputSpec input_spec = 1;
+
+    // Predicate used for the filter request.
+    Predicate predicate = 2;
+
+    // Limit
+    uint64  limit = 3;
+}
+
+// Count represents the count.
+// Next ID = 2
+message Count {
+    uint64 count = 1;
+}
+
+// GraphInputSpec is the graph input specification passed to Oracle.
+// Next ID = 2
+message GraphInputSpec {
+  oneof input {
+    AllGraphsWithRepetitions all_graphs_with_repetitions = 1;
+  }
+}
+
+// AllGraphsWithRepetitions 
+message AllGraphsWithRepetitions {
+  uint64 size = 1;
+}
+
+// Predicate represents a predicate taking a graph as the input.
+// Next ID = 1
+message Predicate {}
