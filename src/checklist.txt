@@ -1,0 +1,4 @@
+- namespace graphbase
+- ////// comments in cpp files
+- CamelCase for type names and functions
+- snake_case for variables

@@ -1,6 +1,6 @@
 # estd
 # This is kept simple as it doesn't require any building rules.
-export Estd_hdrs=${SRC_DIR}/estd/estd.hpp
+export Estd_hdrs=$(wildcard ${SRC_DIR}/estd/*.hpp)
 
 # protos
 export Protos_lib=${BUILD_DIR}/protos/libprotos.a
@@ -41,3 +41,13 @@ ${Sources_lib}:
 
 ${Sources_hdrs}:
 	${MAKE} -C ${SRC_DIR}/graphsource ${Sources_hdrs}
+
+# conversions
+export Conversions_lib=${BUILD_DIR}/conversions/libconversions.a
+export Conversions_hdrs=${BUILD_DIR}/conversions/_headers
+
+${Conversions_lib}:
+	${MAKE} -C ${SRC_DIR}/conversions ${Conversions_lib}
+
+${Conversions_hdrs}:
+	${MAKE} -C ${SRC_DIR}/conversions ${Conversions_hdrs}

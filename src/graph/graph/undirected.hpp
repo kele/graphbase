@@ -1,70 +1,61 @@
 #pragma once
 
-#include "estd/estd.hpp"
-#include "graph/common/common.hpp"
-
-#include <algorithm>
-#include <functional>
-#include <sstream>
-#include <stdexcept>
-#include <utility>
 #include <vector>
 
+#include "estd/estd.hpp"
+#include "graph/common/common.hpp"
 #include "graph/graph/undirected_vector_edge_container.hpp"
 
 namespace graphbase {
 namespace graph {
 namespace undirected {
 
+// EmptyGraphBase should be used for every undirected graph implementation. It
+// it used in the is_undirected_graph predicate to check whether a graph is
+// undirected or not.
 class EmptyGraphBase {
  public:
   constexpr GraphType Type() const { return GraphType::Undirected; }
 };
 
+// is_undirected_graph checks whether the type is marked as one implementing an
+// undirected graph.
 template <class G>
 using is_undirected_graph =
     std::enable_if_t<std::is_base_of_v<EmptyGraphBase, G>>;
 
-/* Undirected graph.
- *
- * The graph is parametrized by the edge type, thus allowing the graph to have
- * any data associated to the edges.
- *
- * This implementation allows for loops and multiple edges between the same
- * vertices.
- */
+// Undirected graph.
 template <class VertexData = void,
           class EdgeContainer = VectorEdgeContainer<void>>
 class Graph;
 
+// Undirected graph with no data associated to edges.
 template <class EdgeContainer>
 class Graph<void, EdgeContainer> : EmptyGraphBase {
  public:
+  // Creates a graph with `n` vertices.
+  // Cost: O(V)
   explicit Graph(size_t n);
 
+  // Vertices.
+  // Cost: O(1)
   const std::vector<unsigned>& vertices() const;
 
-  /* Remove adjacent edges */
-  void remove_adjacent_edges(unsigned v);
-
-  /* Edges in the graph */
+  // Edges in the graph.
+  // Cost: O(1)
   const EdgeContainer& edges() const;
 
-  /* Performs an operation on each edge */
-  void for_each_edge(std::function<void(const edge_t&)>) const;
-
-  /* Adds an edge to the graph. */
-  void add_edge(edge_t edge);
-
-  /* Removes an edge from the graph. */
-  void remove_edge(edge_t edge);
+  // Edges in the graph.
+  // Cost: O(1)
+  EdgeContainer& edges();
 
  private:
   EdgeContainer m_edges;
   std::vector<unsigned> m_vertices;
 };
 
-using BasicGraph = Graph<>;
+// BasicGraph is an undirected graph with no data tied to vertices nor edges.
+using BasicGraph = Graph<void, VectorEdgeContainer<void>>;
 
 }  // namespace undirected
 }  // namespace graph

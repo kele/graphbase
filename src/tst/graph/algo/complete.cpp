@@ -7,7 +7,7 @@ using namespace graphbase;
 
 using graph::edge_t;
 using graph::undirected::BasicGraph;
-using graph::undirected::is_complete;
+using graph::undirected::IsComplete;
 
 TEST_CASE("Non complete graph", "[undirected] [graph] [complete]") {
   // Setup
@@ -19,11 +19,11 @@ TEST_CASE("Non complete graph", "[undirected] [graph] [complete]") {
 
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Test
-  REQUIRE(not is_complete(g));
+  REQUIRE(not IsComplete(g));
 }
 
 TEST_CASE("Complete graph", "[undirected] [graph] [complete]") {
@@ -36,9 +36,9 @@ TEST_CASE("Complete graph", "[undirected] [graph] [complete]") {
 
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Test
-  REQUIRE(is_complete(g));
+  REQUIRE(IsComplete(g));
 }

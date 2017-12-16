@@ -9,7 +9,7 @@ namespace graph {
 namespace undirected {
 
 template <class G, class = is_undirected_graph<G>>
-bool is_complete(const G& g) {
+bool IsComplete(const G& g) {
   const size_t size = g.vertices().size();
   for (auto v : g.vertices()) {
     std::vector<bool> present(size, false);

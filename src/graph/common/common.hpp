@@ -7,7 +7,7 @@ namespace graph {
 
 enum class GraphType { Undirected, Directed };
 
-/* Directed arc (edge). */
+// Directed arc (edge).
 class arc_t {
  public:
   arc_t(unsigned first, unsigned last);
@@ -23,7 +23,7 @@ class arc_t {
   unsigned m_first, m_last;
 };
 
-/* Undirected edge. */
+// Undirected edge.
 class edge_t {
  public:
   edge_t(unsigned first, unsigned last);

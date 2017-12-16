@@ -32,6 +32,7 @@ int main() {
     server->Wait();
   } catch (const std::exception& e) {
     std::cerr << "Exception: " << e.what() << std::endl;
+    std::cerr << "Shutting down the server." << std::endl;
     std::exit(-1);
   }
 }

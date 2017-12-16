@@ -37,6 +37,7 @@ graphbase:
 
 .PHONY: clangformat
 clangformat:
+	${MAKE} -C ${SRC_DIR}/estd clangformat
 	${MAKE} -C ${SRC_DIR}/graph clangformat
 	${MAKE} -C ${SRC_DIR}/oracle clangformat
 	${MAKE} -C ${SRC_DIR}/graphsource clangformat
@@ -47,10 +48,10 @@ clangformat:
 test:
 	${MAKE} -C ${SRC_DIR}/tst/graph test_all
 
+.PHONY: run_test
 run_test: test
 	${BUILD_DIR}/tst/graph/test_all
 	echo "All tests passed"
-.PHONY: run_test
 
 clean:
 	rm -rf ${BUILD_DIR}

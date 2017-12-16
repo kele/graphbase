@@ -7,16 +7,8 @@
 namespace graphbase {
 namespace conversions {
 
-template<class G, class = graph::undirected::is_undirected_graph<G>>
-std::string ToGraph6(const G& g) {
-  // TODO: this is not actually graph6, but we'll stick with that for now
-  std::stringstream ss;
-  ss << "size: " << g.vertices().size() << " | ";
-  g.for_each_edge([&ss](const graph::edge_t& e) {
-    ss << "(" << e.first() << ", " << e.last() << ")";
-  });
-  return ss.str();
-}
+// ToGraph6 returns the graph6 representation of an undirected graph.
+std::string ToGraph6(const graph::undirected::BasicGraph& g);
 
 } // namespace conversions
 } // namespace graphbase

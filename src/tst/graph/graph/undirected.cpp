@@ -1,6 +1,6 @@
 #include "third_party/catch.hpp"
 
-#include <set>
+#include <map>
 
 #include "graph/graph/undirected.hpp"
 
@@ -45,20 +45,20 @@ void check_graph(const BasicGraph &g, const std::vector<edge_t> &want_edges,
     }
   }
 
-  SECTION("Counting all the edges by putting them in a set") {
-    std::set<std::pair<unsigned, unsigned>> want_edges_set;
+  SECTION("Counting all the edges by putting them in a map") {
+    std::map<std::pair<unsigned, unsigned>, int> want_edges_map;
     for (const auto &e : want_edges) {
       auto p = static_cast<std::pair<unsigned, unsigned>>(e);
-      want_edges_set.insert(p);
+      want_edges_map[p]++;
     }
 
-    std::set<std::pair<unsigned, unsigned>> got_edges_set;
-    g.for_each_edge([&got_edges_set](const edge_t &e) {
+    std::map<std::pair<unsigned, unsigned>, int> got_edges_map;
+    g.edges().for_each([&got_edges_map](const edge_t &e) {
       auto p = static_cast<std::pair<unsigned, unsigned>>(e);
-      got_edges_set.insert(p);
+      got_edges_map[p]++;
     });
 
-    REQUIRE(want_edges_set == got_edges_set);
+    REQUIRE(want_edges_map == got_edges_map);
   }
 }
 
@@ -76,7 +76,7 @@ TEST_CASE("Basic graph creation.", "[undirected] [graph]") {
   // Test
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Assertions
@@ -97,7 +97,7 @@ TEST_CASE("Basic (const) graph creation.", "[undirected] [graph]") {
   // Test
   auto raw_g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    raw_g.add_edge(e);
+    raw_g.edges().add(e);
   }
   const auto &g = raw_g;
 
@@ -114,7 +114,7 @@ TEST_CASE("Removing adjacent edges", "[undirected] [graph]") {
   };
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Expectations
@@ -128,7 +128,7 @@ TEST_CASE("Removing adjacent edges", "[undirected] [graph]") {
   };
 
   // Test
-  g.remove_adjacent_edges(1);
+  g.edges().remove_adjacent(1);
 
   // Assertions
   check_graph(g, want_edges, GRAPH_SIZE);
@@ -143,7 +143,7 @@ TEST_CASE("Removing edges", "[undirected] [graph]") {
   };
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Expectations
@@ -157,8 +157,8 @@ TEST_CASE("Removing edges", "[undirected] [graph]") {
   };
 
   // Test
-  g.remove_edge(edge_t(1, 3));
-  g.remove_edge(edge_t(3, 4));
+  g.edges().remove(edge_t(1, 3));
+  g.edges().remove(edge_t(3, 4));
 
   // Assertions
   check_graph(g, want_edges, GRAPH_SIZE);

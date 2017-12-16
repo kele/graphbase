@@ -5,14 +5,14 @@
 namespace graphbase {
 namespace graph {
 namespace undirected {
-namespace algo {
+namespace predicates {
 
-class IsBipartite : public graph::algo::Predicate {
+class IsBipartite : public graphbase::graph::predicates::Predicate {
  public:
   bool Test(const graphbase::graphsource::VariantGraph& vg) const override;
 };
 
-}  // namespace algo
+}  // namespace predicates
 }  // namespace undirected
 }  // namespace graph
 }  // namespace graphbase

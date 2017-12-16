@@ -11,8 +11,8 @@ ${Sources_hdrs}: ${CPP_HDRS}
 
 # Library
 ${Sources_lib}: ${CPP_OBJECTS} ${Sources_hdrs} | ${CUR_BUILD_DIR}
-	ar rcs libinput.a ${CPP_OBJECTS}
-	mv libinput.a $@
+	ar rcs libsources.a ${CPP_OBJECTS}
+	mv libsources.a $@
 
 # Misc
 .PHONY: clangformat
