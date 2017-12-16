@@ -1,5 +1,7 @@
 #include "graphsource/all_graphs.hpp"
 
+#include <memory>
+
 namespace graphbase {
 namespace undirected {
 
@@ -29,8 +31,9 @@ using graph::undirected::BasicGraph;
 
 OfSize::OfSize(size_t n) : m_graphsize(n), m_mask(n * (n - 1) / 2) {}
 
-std::optional<VariantGraph> OfSize::operator()() {
-  if (!m_mask.inc()) {
+std::optional<std::shared_ptr<BasicGraph>> OfSize::operator()() {
+  bool successfully_incremented = m_mask.inc();
+  if (not successfully_incremented) {
     return std::nullopt;
   }
 
@@ -44,24 +47,32 @@ std::optional<VariantGraph> OfSize::operator()() {
   for (unsigned first = 0; first < m_graphsize - 1; first++) {
     for (unsigned last = first + 1; last < m_graphsize; last++, edge_index++) {
       if (m_mask.vec()[edge_index]) {
-        g->add_edge(edge_t(first, last));
+        g->edges().add(edge_t(first, last));
       }
     }
   }
-  return std::move(VariantGraph(g));
+  return g;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // OfSizeSource implementation
 OfSizeSource::OfSizeSource(size_t n) : m_size(n) {}
 
-estd::Generator<VariantGraph> OfSizeSource::Graphs() const {
-  std::function<std::optional<VariantGraph>()> f{
-      [gen = std::make_shared<OfSize>(m_size)]() mutable {return (*gen)();
+// For some reason, clangformat cannot format these lines properly. It adds
+// some weird "// namespace FOO" comments in the middle.
+// clang-format off
+estd::generator<VariantGraph> OfSizeSource::Graphs() const {
+  std::function<std::optional<VariantGraph>()> f =
+      [gen = std::make_shared<OfSize>(m_size)]() mutable -> std::optional<VariantGraph> {
+        auto g = (*gen)();
+        if (g) {
+          return std::optional<VariantGraph>(*g);
+        }
+        return std::nullopt;
+      };
+  return estd::generator(std::move(f));
 }
-};  // namespace undirected
-return estd::Generator(std::move(f));
-}  // namespace graphbase
+// clang-format on
 
 Kind OfSizeSource::SourceKind() const { return Kind::All; }
 

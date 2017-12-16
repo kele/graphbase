@@ -3,11 +3,7 @@
 namespace graphbase {
 namespace graphsource {
 
-struct AllUndirected {
-  size_t min_size;
-  size_t max_size;
-};
-
+// Kind is the kind of a GraphSource.
 enum class Kind { All };
 
 }  // namespace graphsource

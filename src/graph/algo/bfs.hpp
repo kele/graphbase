@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <algorithm>
@@ -10,10 +9,15 @@
 namespace graphbase {
 namespace graph {
 namespace undirected {
+namespace algo {
 
-template <class G, class = is_undirected_graph<G>, class F,
-          class = std::is_invocable<F, G, unsigned, unsigned>>
-void bfs(const G& g, unsigned start, F f) {
+// BFS performs a breadth first search on a given graph provided a starting
+// point.
+// TODO(https://github.com/kele/graphbase/issues/2): add constraints for F.
+// TODO(https://github.com/kele/graphbase/issues/5): write better spec (e.g. on
+// which edges is the F functor called)
+template <class G, class = is_undirected_graph<G>, class F>
+void BFS(const G& g, unsigned start, F f) {
   std::vector<bool> visited(g.vertices().size(), false);
   std::vector<bool> seen(g.vertices().size(), false);
   seen[start] = true;
@@ -30,7 +34,7 @@ void bfs(const G& g, unsigned start, F f) {
 
     for (const auto& e : g.edges().adjacent(v)) {
       unsigned u = v == e.first() ? e.last() : e.first();
-      f(v, u, seen[u]);
+      f(v, u, !seen[u]);
       if (seen[u]) continue;
       q.push(u);
       seen[u] = true;
@@ -39,11 +43,12 @@ void bfs(const G& g, unsigned start, F f) {
 }
 
 template <class G, class = is_undirected_graph<G>, class F,
-          class = std::is_invocable<F, G, unsigned, unsigned>>
-void bfs(const G& g, unsigned start, const F&& f) {
-  bfs(g, start, std::ref(f));
+          class = std::is_invocable<F, G, unsigned, bool>>
+void BFS(const G& g, unsigned start, const F&& f) {
+  BFS(g, start, std::ref(f));
 }
 
+}  // namespace algo
 }  // namespace undirected
 }  // namespace graph
 }  // namespace graphbase

@@ -15,7 +15,7 @@ common_objs=$(patsubst ${common_src_dir}/%.cpp,${common_build_dir}/%.o,${common_
 ${common_build_dir}:
 	mkdir -p ${common_build_dir}
 
-${common_build_dir}/%.o: ${common_src_dir}/%.cpp ${ESTD_HDRS} ${common_src_dir}/%.hpp | ${common_build_dir}
+${common_build_dir}/%.o: ${common_src_dir}/%.cpp ${Estd_hdrs} ${common_src_dir}/%.hpp | ${common_build_dir}
 	${CXX} ${CXXFLAGS} -c -o $@ $<
 
 # graph/
@@ -28,7 +28,7 @@ graph_objs=$(patsubst ${graph_src_dir}/%.cpp,${graph_build_dir}/%.o,${graph_srcs
 ${graph_build_dir}:
 	mkdir -p ${graph_build_dir}
 
-${graph_build_dir}/%.o: ${graph_src_dir}/%.cpp ${ESTD_HDRS} ${graph_src_dir}/%.hpp | ${graph_build_dir}
+${graph_build_dir}/%.o: ${graph_src_dir}/%.cpp ${Estd_hdrs} ${graph_src_dir}/%.hpp | ${graph_build_dir}
 	${CXX} ${CXXFLAGS} -c -o $@ $<
 
 # algo/
@@ -41,7 +41,7 @@ algo_objs=$(patsubst ${algo_src_dir}/%.cpp,${algo_build_dir}/%.o,${algo_srcs})
 ${algo_build_dir}:
 	mkdir -p ${algo_build_dir}
 
-${algo_build_dir}/%.o: ${algo_src_dir}/%.cpp ${ESTD_HDRS} ${algo_src_dir}/%.hpp | ${algo_build_dir}
+${algo_build_dir}/%.o: ${algo_src_dir}/%.cpp ${Estd_hdrs} ${algo_src_dir}/%.hpp | ${algo_build_dir}
 	${CXX} ${CXXFLAGS} -c -o $@ $<
 
 # Combined
@@ -55,7 +55,7 @@ ${Graph_hdrs}: ${hdrs}
 	touch $@
 
 # Library
-${Graph_lib}: ${objs} ${ESTD_HDRS} | ${CUR_BUILD_DIR}
+${Graph_lib}: ${objs} ${Estd_hdrs} | ${CUR_BUILD_DIR}
 	ar rcs libgraph.a ${objs}
 	mv libgraph.a $@
 

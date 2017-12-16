@@ -5,16 +5,16 @@
 namespace graphbase {
 namespace graph {
 namespace undirected {
-namespace algo {
+namespace predicates {
 
 bool IsBipartite::Test(const graphbase::graphsource::VariantGraph& vg) const {
   if (not vg.IsUndirected()) {
     return false;
   }
-  return graph::undirected::algo::is_bipartite(*vg.Undirected());
+  return graph::undirected::algo::IsBipartite(*vg.Undirected());
 }
 
-}  // namespace algo
+}  // namespace predicates
 }  // namespace undirected
 }  // namespace graph
 }  // namespace graphbase

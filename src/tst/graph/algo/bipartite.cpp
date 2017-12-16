@@ -7,7 +7,7 @@ using namespace graphbase;
 
 using graph::edge_t;
 using graph::undirected::BasicGraph;
-using graph::undirected::algo::is_bipartite;
+using graph::undirected::algo::IsBipartite;
 
 TEST_CASE("Non bipartite graph", "[undirected] [graph] [bipartite]") {
   // Setup
@@ -19,11 +19,11 @@ TEST_CASE("Non bipartite graph", "[undirected] [graph] [bipartite]") {
 
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Test
-  REQUIRE(not is_bipartite(g));
+  REQUIRE(not IsBipartite(g));
 }
 
 TEST_CASE("Bipartite graph", "[undirected] [graph] [bipartite]") {
@@ -36,11 +36,11 @@ TEST_CASE("Bipartite graph", "[undirected] [graph] [bipartite]") {
 
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Test
-  REQUIRE(is_bipartite(g));
+  REQUIRE(IsBipartite(g));
 }
 
 TEST_CASE("Non bipartite, disconnected graph",
@@ -62,9 +62,9 @@ TEST_CASE("Non bipartite, disconnected graph",
 
   auto g = BasicGraph(GRAPH_SIZE);
   for (auto e : edges) {
-    g.add_edge(e);
+    g.edges().add(e);
   }
 
   // Test
-  REQUIRE(not is_bipartite(g));
+  REQUIRE(not IsBipartite(g));
 }
