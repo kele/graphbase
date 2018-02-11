@@ -1,2 +1,7 @@
 build/
 .clang_complete
+*.aux
+*.log
+*.out
+*.pdf
+*.toc
