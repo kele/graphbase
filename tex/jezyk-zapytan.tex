@@ -6,6 +6,83 @@
 
 \section{Abstrakcyjne drzewo rozbioru}
 
+\subsection{Zbiór typów}
+Zbiór typów $T$ definiujemy następująco:
+\begin{itemize}
+    \item $Bool, Integer, Float, Void \in T$
+    \item jeśli $\alpha \in T$ to
+        $Set\langle \alpha \rangle$, $List\langle \alpha \rangle,
+        Gen\langle \alpha \rangle \in T$
+    \item jeśli $\alpha \in T$ to
+        $Node\langle \alpha \rangle \in T$
+    \item jeśli $\alpha \in T$ to
+        $Edge\langle \alpha \rangle \in T$
+    \item jeśli $\alpha \in T$ to
+        $Arc\langle \alpha \rangle \in T$
+    \item jeśli $Node\langle \alpha \rangle \in T$ oraz $Edge\langle \beta \rangle \in T$ to
+        $Graph\langle \alpha, \beta \rangle \in T$
+    \item jeśli $Node\langle \alpha \rangle \in T$ oraz $Arc\langle \beta \rangle \in T$ to
+        $Digraph\langle \alpha, \beta \rangle \in T$
+\end{itemize}
 
+
+\subsection{Zbiór wyrażeń i reguły typowania}
+Niech $S$ będzie zbiorem wyrażeń. Jeśli $e \in S$, $\alpha \in T$ to $\Gamma
+\vdash e : \alpha$ oznacza ,,wyrażenie $e$ ma typ $\alpha$ w kontekście
+$\Gamma$'', gdzie $\Gamma \subset\ Ident \times T$. $Ident$ jest zbiorem identyfikatorów.
+
+
+Zbiór wyrażeń $S$ oraz reguły typowania definiujemy następująco:
+\begin{itemize}
+    \item liczby naturalne należą do $S$ i mają typ $Integer$, tzn. dla każdej
+        liczby naturalnej $n$ i dowolnego kontekstu $\Gamma$ mamy $\Gamma
+        \vdash n : Integer$
+    \item $true, false \in S$ oraz $\Gamma \vdash true : Bool$ i $\Gamma \vdash false : Bool$
+    \item jeśli $n \in \mathbb{N}$, $e_1, e_2, ..., e_n \in S$ oraz
+        $\forall_{1 \leq i \leq n} \, \Gamma \vdash e_i : \alpha$ to
+        ${e_1, e_2, ..., e_n} \in S$ oraz
+        $\Gamma \vdash {e_1, e_2, ..., e_n} : Set\langle \alpha \rangle$
+    \item jeśli $e_1, e_2 \in S$,
+        $\alpha \in T$,
+        $x \in Ident$,
+        $\Gamma \vdash e_1 : Gen\langle \alpha \rangle$,
+        $\Gamma, (x, \alpha) \vdash e_2 : Bool$ to
+        $Forall(x, e_1, e_2) \in S$ oraz $\Gamma \vdash Forall(x, e_1, e_2) : Bool$
+        Pod warunkiem, że $x$ nie występuje w żadnej parze należącej do $\Gamma$.
+    \item jeśli $e_1, e_2 \in S$,
+        $\alpha \in T$,
+        $x \in Ident$,
+        $\Gamma \vdash e_1 : Gen\langle \alpha \rangle$,
+        $\Gamma, (x, \alpha) \vdash e_2 : Bool$ to
+        $Exists(x, e_1, e_2) \in S$ oraz $\Gamma \vdash Exists(x, e_1, e_2) : Bool$.
+        Pod warunkiem, że $x$ nie występuje w żadnej parze należącej do $\Gamma$.
+\end{itemize}
+
+
+Zbiór $S$ oraz reguły typowania zostają wzbogacone o dodatkowe funkcje takie
+jak: $VerticesNum$ oznaczająca liczbę wierzchołków w grafie, $AddEdge$ dodająca
+wierzchołek do grafu, itd. Ich arność jak i reguły typowania dla nich są
+zdefiniowane naturalnie, stąd zostały pominięte w formalnej definicji $S$ i regułach typowania.
+
+Definiując $S$ wraz ze zbiorem reguł typowania sprawiamy, że wszystkie
+syntaktycznie poprawne wyrażenia są także wyrażeniami, które poprawnie się
+typują.
+
+
+\subsection{Koercje}
+Dozwolone (niejawne) koercje między typami:
+\begin{itemize}
+    \item jeśli $\Gamma \vdash e : Set\langle \alpha \rangle$ to
+        $\Gamma \vdash e : Gen\langle \alpha \rangle$
+    \item jeśli $\Gamma \vdash e : List\langle \alpha \rangle$ to
+        $\Gamma \vdash e : Gen\langle \alpha \rangle$
+    \item jeśli $\Gamma \vdash e : Gen\langle \alpha \rangle$ to
+        $\Gamma \vdash e : Set\langle \alpha \rangle$ oraz
+        $\Gamma \vdash e : List\langle \alpha \rangle$
+    \item jeśli $\Gamma \vdash e : Graph\langle \alpha, \beta \rangle$ to
+        $\Gamma \vdash e : Graph\langle Void, Void \rangle$
+    \item jeśli $\Gamma \vdash e : Digraph\langle \alpha, \beta \rangle$ to
+        $\Gamma \vdash e : Digraph\langle Void, Void \rangle$
+\end{itemize}
 
 \end{document}
