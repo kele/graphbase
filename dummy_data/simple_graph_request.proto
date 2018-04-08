@@ -1,0 +1,8 @@
+input_spec: {
+  all_graphs_with_repetitions: {
+    size: 1
+  }
+}
+predicate: {
+}
+limit: 5
