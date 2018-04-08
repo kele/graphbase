@@ -4,5 +4,6 @@ input_spec: {
   }
 }
 predicate: {
+  is_bipartite: {}
 }
 limit: 5

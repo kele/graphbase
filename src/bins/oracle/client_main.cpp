@@ -22,7 +22,11 @@ int main(int argc, char *argv[]) {
 
     std::cout << "#############################################" << std::endl;
     std::cout << "# Response for request " << i << std::endl;
-    client.PrintGraphs(request);
+    auto status = client.PrintGraphs(request);
+    if (!status.ok()) {
+      std::cout << "Error: " << status.error_message() << " - "
+                << status.error_details() << std::endl;
+    }
     std::cout << "# End of response for request " << i << std::endl
               << std::endl;
   }
@@ -32,8 +36,10 @@ void GraphRequestFromFile(std::string filename,
                           protos::services::GraphsRequest *request) {
   std::ifstream f(filename);
   google::protobuf::io::IstreamInputStream is(&f);
-
   auto parser = google::protobuf::TextFormat::Parser();
-
-  parser.Parse(&is, request);
+  bool status = parser.Parse(&is, request);
+  if (!status) {
+    throw std::runtime_error("Error parsing file: " + filename +
+                             ". See stderr for details.");
+  }
 }

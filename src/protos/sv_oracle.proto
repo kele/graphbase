@@ -41,11 +41,17 @@ message GraphInputSpec {
   }
 }
 
-// AllGraphsWithRepetitions 
+// AllGraphsWithRepetitions
 message AllGraphsWithRepetitions {
   uint64 size = 1;
 }
 
 // Predicate represents a predicate taking a graph as the input.
 // Next ID = 1
-message Predicate {}
+message Predicate {
+  oneof predicate {
+    IsBipartite is_bipartite = 1;
+  }
+}
+
+message IsBipartite {}

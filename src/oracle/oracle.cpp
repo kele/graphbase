@@ -21,8 +21,8 @@ estd::generator<std::shared_ptr<const BasicGraph>> Oracle::GetUndirectedGraphs(
     Kind source_kind, std::shared_ptr<const Predicate> p) const {
   auto candidates = m_sources.at(source_kind)->Graphs();
 
-  auto f = [ candidates = std::move(candidates),
-             p ]() mutable->std::optional<std::shared_ptr<const BasicGraph>> {
+  auto f = [candidates = std::move(candidates),
+            p]() mutable -> std::optional<std::shared_ptr<const BasicGraph>> {
     std::optional<VariantGraph> opt_g;
     while ((opt_g = candidates.next())) {
       const auto &g = std::move(opt_g).value();

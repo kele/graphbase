@@ -20,7 +20,7 @@ class generator {
 
   // singleton is a generator that returns a single value
   static generator<V> singleton(V v) {
-    auto f = [ v = std::move(v), has = true ]() mutable->std::optional<V> {
+    auto f = [v = std::move(v), has = true]() mutable -> std::optional<V> {
       if (has) {
         has = false;
         return v;

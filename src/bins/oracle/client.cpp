@@ -31,6 +31,5 @@ grpc::Status OracleClient::PrintGraphs(const GraphsRequest &request) {
       std::cout << g.undirected().graph6() << std::endl;
     }
   }
-
   return reader->Finish();
 }

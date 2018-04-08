@@ -7,6 +7,7 @@
 #include "conversions/undirected.hpp"
 #include "graph/algo/undirected_predicates.hpp"
 #include "oracle/oracle.hpp"
+#include "oracle/process_request.hpp"
 #include "protos/graph.pb.h"
 #include "protos/sv_oracle.grpc.pb.h"
 
@@ -22,16 +23,9 @@ using GraphsRequestProto = protos::services::GraphsRequest;
 OracleServer::OracleServer(std::unique_ptr<graphbase::Oracle> oracle)
     : m_oracle(std::move(oracle)) {}
 
-std::shared_ptr<graph::predicates::Predicate> PredicateFromRequest(
-    const GraphsRequestProto* request) {
-  return std::make_shared<graph::undirected::predicates::IsBipartite>();
-}
-
-Kind KindFromRequest(const GraphsRequestProto* request) { return Kind::All; }
-
 Status OracleServer::GetGraphs(ServerContext* context,
                                const GraphsRequestProto* request,
-                               ServerWriter<GraphProto>* writer) {
+                               ServerWriter<GraphProto>* writer) try {
   using graph::undirected::BasicGraph;
 
   auto gen = m_oracle->GetUndirectedGraphs(KindFromRequest(request),
@@ -57,11 +51,14 @@ Status OracleServer::GetGraphs(ServerContext* context,
   }
 
   return Status::OK;
+
+} catch (const std::exception& e) {
+  return Status(StatusCode::INTERNAL, e.what());
 }
 
 Status OracleServer::GetCount(ServerContext* context,
                               const GraphsRequestProto* request,
-                              protos::services::Count* response) {
+                              protos::services::Count* response) try {
   uint64_t count = 0;
   auto gen = m_oracle->GetUndirectedGraphsCount(KindFromRequest(request),
                                                 PredicateFromRequest(request));
@@ -72,4 +69,7 @@ Status OracleServer::GetCount(ServerContext* context,
   }
   response->set_count(count);
   return Status::OK;
+
+} catch (const std::exception& e) {
+  return Status(StatusCode::INTERNAL, e.what());
 }
