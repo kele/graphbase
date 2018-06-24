@@ -15,7 +15,7 @@ namespace algo {
 
 // IsBipartite returns true if the graph is bipartite
 template <class G, class = is_undirected_graph<G>>
-bool IsBipartite(const G& g) {
+bool IsBipartite(const G &g) {
   // This implementation is based on the fact that a graph is bipartite iff it
   // is two-coloured (chromatic number is equal to two).
   enum class Color { Undefined, Blue, Red };
@@ -39,7 +39,8 @@ bool IsBipartite(const G& g) {
   // yet, it means it belongs to a different connected component than the ones
   // we've already traversed using BFS().
   for (auto start : g.vertices()) {
-    if (not bipartite) return false;
+    if (not bipartite)
+      return false;
 
     if (colors[start] == Color::Undefined) {
       colors[start] = Color::Blue;
@@ -49,7 +50,7 @@ bool IsBipartite(const G& g) {
   return bipartite;
 }
 
-}  // namespace algo
-}  // namespace undirected
-}  // namespace graph
-}  // namespace graphbase
+} // namespace algo
+} // namespace undirected
+} // namespace graph
+} // namespace graphbase

@@ -23,20 +23,20 @@ VectorEdgeContainer<void>::VectorEdgeContainer(size_t n) : m_num_edges(0) {
 
 size_t VectorEdgeContainer<void>::size() const { return m_num_edges; }
 
-const AdjacentEdges& VectorEdgeContainer<void>::adjacent(unsigned v) const {
+const AdjacentEdges &VectorEdgeContainer<void>::adjacent(unsigned v) const {
   estd::require(v < m_edges.size(), "vertex index too high",
                 "VectorEdgeContainer::adjacent()");
   return m_edges[v];
 }
 
-const std::vector<AdjacentEdges>& VectorEdgeContainer<void>::vectors() const {
+const std::vector<AdjacentEdges> &VectorEdgeContainer<void>::vectors() const {
   return m_edges;
 }
 
 void VectorEdgeContainer<void>::for_each(
-    std::function<void(const edge_t&)> f) const {
-  for (const auto& edges : m_edges) {
-    for (const auto& e : edges) {
+    std::function<void(const edge_t &)> f) const {
+  for (const auto &edges : m_edges) {
+    for (const auto &e : edges) {
       if (edges.vertex() == e.first()) {
         // Each edge is present in two AdjacentEdges containers. But since the
         // edges are normalized, each edge will pass the predicate below only
@@ -55,8 +55,8 @@ void VectorEdgeContainer<void>::remove_adjacent(unsigned v) {
   m_edges[v].clear();
 
   /* Removing the other side of each edge. */
-  for (auto& edges : m_edges) {
-    auto it = remove_if(begin(edges), end(edges), [v](const edge_t& edge) {
+  for (auto &edges : m_edges) {
+    auto it = remove_if(begin(edges), end(edges), [v](const edge_t &edge) {
       return edge.last() == v || edge.first() == v;
     });
     /* We are not decrementing the count of edges here as we did that already.
@@ -68,7 +68,7 @@ void VectorEdgeContainer<void>::remove_adjacent(unsigned v) {
 void VectorEdgeContainer<void>::remove(edge_t e) {
   bool edge_found = false;
   for (auto v : {e.first(), e.last()}) {
-    auto& adjacent = m_edges[v];
+    auto &adjacent = m_edges[v];
     auto it = std::find(begin(adjacent), end(adjacent), e);
     if (it != end(adjacent)) {
       edge_found = true;
@@ -93,6 +93,6 @@ void VectorEdgeContainer<void>::add(edge_t e) {
   m_edges[e.last()].push_back(e);
 }
 
-}  // namespace undirected
-}  // namespace graph
-}  // namespace graphbase
+} // namespace undirected
+} // namespace graph
+} // namespace graphbase

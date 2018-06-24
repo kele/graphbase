@@ -14,7 +14,7 @@ namespace undirected {
 // it used in the is_undirected_graph predicate to check whether a graph is
 // undirected or not.
 class EmptyGraphBase {
- public:
+public:
   constexpr GraphType Type() const { return GraphType::Undirected; }
 };
 
@@ -32,24 +32,24 @@ class Graph;
 // Undirected graph with no data associated to edges.
 template <class EdgeContainer>
 class Graph<void, EdgeContainer> : EmptyGraphBase {
- public:
+public:
   // Creates a graph with `n` vertices.
   // Cost: O(V)
   explicit Graph(size_t n);
 
   // Vertices.
   // Cost: O(1)
-  const std::vector<unsigned>& vertices() const;
+  const std::vector<unsigned> &vertices() const;
 
   // Edges in the graph.
   // Cost: O(1)
-  const EdgeContainer& edges() const;
+  const EdgeContainer &edges() const;
 
   // Edges in the graph.
   // Cost: O(1)
-  EdgeContainer& edges();
+  EdgeContainer &edges();
 
- private:
+private:
   EdgeContainer m_edges;
   std::vector<unsigned> m_vertices;
 };
@@ -57,8 +57,8 @@ class Graph<void, EdgeContainer> : EmptyGraphBase {
 // BasicGraph is an undirected graph with no data tied to vertices nor edges.
 using BasicGraph = Graph<void, VectorEdgeContainer<void>>;
 
-}  // namespace undirected
-}  // namespace graph
-}  // namespace graphbase
+} // namespace undirected
+} // namespace graph
+} // namespace graphbase
 
 #include "graph/graph/undirected_impl.hpp"

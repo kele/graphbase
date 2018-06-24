@@ -94,18 +94,31 @@ set(GRAPHBASE_LIB_HDRS
     ${ORACLE_HDRS}
 )
 
+
 add_library(GraphbaseLib ${GRAPHBASE_LIB_SRCS} ${GRAPHBASE_LIB_HDRS})
 target_link_libraries(GraphbaseLib ProtoLib)
 
 
 # Binaries
-file(GLOB ORACLE_CLIENT_SRCS bins/oracle/client/*.cpp)
-add_executable(OracleClient ${ORACLE_CLIENT_SRCS})
+file(GLOB ORACLE_CLIENT_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/bins/oracle/client/*.cpp)
+file(GLOB ORACLE_CLIENT_HDRS ${CMAKE_CURRENT_SOURCE_DIR}/bins/oracle/client/*.hpp)
+add_executable(OracleClient ${ORACLE_CLIENT_SRCS} ${ORACLE_CLIENT_HDRS})
 target_link_libraries(OracleClient GraphbaseLib ProtoLib ${GRPC_LIBS})
 
-file(GLOB ORACLE_SERVER_SRCS bins/oracle/server/*.cpp)
-add_executable(OracleServer ${ORACLE_SERVER_SRCS})
+file(GLOB ORACLE_SERVER_SRCS ${CMAKE_CURRENT_SOURCE_DIR}/bins/oracle/server/*.cpp)
+file(GLOB ORACLE_SERVER_HDRS ${CMAKE_CURRENT_SOURCE_DIR}/bins/oracle/server/*.hpp)
+add_executable(OracleServer ${ORACLE_SERVER_SRCS} ${ORACLE_SERVER_HDRS})
 target_link_libraries(OracleServer GraphbaseLib ProtoLib ${GRPC_LIBS})
+
+add_custom_target(
+  clangformat
+  COMMAND /usr/bin/clang-format
+    -style=LLVM
+    -i
+    ${GRAPHBASE_LIB_SRCS} ${GRAPHBASE_LIB_HDRS}
+    ${ORACLE_CLIENT_SRCS} ${ORACLE_CLIENT_HDRS}
+    ${ORACLE_SERVER_SRCS} ${ORACLE_SERVER_HDRS}
+)
 
 # Tests
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/tst)

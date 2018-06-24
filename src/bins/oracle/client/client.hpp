@@ -7,12 +7,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // OracleClient is the Oracle gRPC client.
 class OracleClient {
- public:
+public:
   explicit OracleClient(std::shared_ptr<grpc::Channel> channel);
 
   // PrintGraphs prints the graphs got using the given request.
   grpc::Status PrintGraphs(const protos::services::GraphsRequest &request);
 
- protected:
+protected:
   std::unique_ptr<protos::services::Oracle::Stub> m_stub;
 };

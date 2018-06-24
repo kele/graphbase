@@ -51,5 +51,5 @@ std::shared_ptr<const BasicDigraph> VariantGraph::Directed() const {
   return std::get<std::shared_ptr<const BasicDigraph>>(m_graph);
 }
 
-}  // namespace graphsource
-}  // namespace graphbase
+} // namespace graphsource
+} // namespace graphbase

@@ -17,8 +17,9 @@ void Oracle::RegisterSource(Kind source_kind,
   m_sources[source_kind] = std::move(source);
 }
 
-estd::generator<std::shared_ptr<const BasicGraph>> Oracle::GetUndirectedGraphs(
-    Kind source_kind, std::shared_ptr<const Predicate> p) const {
+estd::generator<std::shared_ptr<const BasicGraph>>
+Oracle::GetUndirectedGraphs(Kind source_kind,
+                            std::shared_ptr<const Predicate> p) const {
   auto candidates = m_sources.at(source_kind)->Graphs();
 
   auto f = [candidates = std::move(candidates),
@@ -35,8 +36,9 @@ estd::generator<std::shared_ptr<const BasicGraph>> Oracle::GetUndirectedGraphs(
   return estd::generator<std::shared_ptr<const BasicGraph>>(std::move(f));
 }
 
-estd::generator<size_t> Oracle::GetUndirectedGraphsCount(
-    Kind source_kind, std::shared_ptr<const Predicate> p) const {
+estd::generator<size_t>
+Oracle::GetUndirectedGraphsCount(Kind source_kind,
+                                 std::shared_ptr<const Predicate> p) const {
   size_t count = 0;
 
   auto graphs = GetUndirectedGraphs(source_kind, p);
@@ -47,4 +49,4 @@ estd::generator<size_t> Oracle::GetUndirectedGraphsCount(
   return estd::generator<size_t>::singleton(count);
 }
 
-}  // namespace graphbase
+} // namespace graphbase

@@ -18,7 +18,7 @@ using graph::undirected::BasicGraph;
 
 // VariantGraph is a wrapper around a directed or undirected graph.
 class VariantGraph {
- public:
+public:
   explicit VariantGraph(std::shared_ptr<const BasicGraph> g);
   explicit VariantGraph(std::shared_ptr<const BasicDigraph> g);
 
@@ -32,7 +32,7 @@ class VariantGraph {
 
   std::shared_ptr<const BasicDigraph> Directed() const;
 
- private:
+private:
   std::variant<std::shared_ptr<const BasicDigraph>,
                std::shared_ptr<const BasicGraph>>
       m_graph;
@@ -40,11 +40,11 @@ class VariantGraph {
 
 // GraphSource creates generators for specific graph types.
 class GraphSource {
- public:
+public:
   virtual estd::generator<VariantGraph> Graphs() const = 0;
   virtual Kind SourceKind() const = 0;
   virtual GraphType SourceGraphType() const = 0;
 };
 
-}  // namespace graphsource
-}  // namespace graphbase
+} // namespace graphsource
+} // namespace graphbase

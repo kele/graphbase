@@ -17,7 +17,9 @@ int main(int argc, char *argv[]) {
                                           grpc::InsecureChannelCredentials()));
 
   if (argc <= 1) {
-    std::cerr << "Missing arguments. Each argument should be a request protocol buffer." << std::endl;
+    std::cerr << "Missing arguments. Each argument should be a request "
+                 "protocol buffer."
+              << std::endl;
     return -1;
   }
 

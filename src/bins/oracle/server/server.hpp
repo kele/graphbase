@@ -9,20 +9,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 // OracleServer is an implementation of the protos::services::Oracle::Service.
 class OracleServer : public protos::services::Oracle::Service {
- public:
+public:
   explicit OracleServer(std::unique_ptr<graphbase::Oracle> oracle);
 
   // GetGraphs returns the graphs retrieved using GraphInputSpec that pass the
   // given predicate.
-  grpc::Status GetGraphs(grpc::ServerContext* context,
-                         const protos::services::GraphsRequest* request,
-                         grpc::ServerWriter<protos::Graph>* writer) override;
+  grpc::Status GetGraphs(grpc::ServerContext *context,
+                         const protos::services::GraphsRequest *request,
+                         grpc::ServerWriter<protos::Graph> *writer) override;
   // GetCount returns the count of graphs retrieved using GraphInputSpec that
   // pass the given predicate.
-  grpc::Status GetCount(grpc::ServerContext* context,
-                        const protos::services::GraphsRequest* request,
-                        protos::services::Count* response) override;
+  grpc::Status GetCount(grpc::ServerContext *context,
+                        const protos::services::GraphsRequest *request,
+                        protos::services::Count *response) override;
 
- private:
+private:
   std::unique_ptr<graphbase::Oracle> m_oracle;
 };

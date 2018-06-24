@@ -80,5 +80,5 @@ graph::GraphType OfSizeSource::SourceGraphType() const {
   return graph::GraphType::Undirected;
 }
 
-}  // namespace undirected
-}  // namespace graphbase
+} // namespace undirected
+} // namespace graphbase

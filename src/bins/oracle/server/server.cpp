@@ -23,9 +23,9 @@ using GraphsRequestProto = protos::services::GraphsRequest;
 OracleServer::OracleServer(std::unique_ptr<graphbase::Oracle> oracle)
     : m_oracle(std::move(oracle)) {}
 
-Status OracleServer::GetGraphs(ServerContext* context,
-                               const GraphsRequestProto* request,
-                               ServerWriter<GraphProto>* writer) try {
+Status OracleServer::GetGraphs(ServerContext *context,
+                               const GraphsRequestProto *request,
+                               ServerWriter<GraphProto> *writer) try {
   using graph::undirected::BasicGraph;
 
   auto gen = m_oracle->GetUndirectedGraphs(KindFromRequest(request),
@@ -36,7 +36,7 @@ Status OracleServer::GetGraphs(ServerContext* context,
 
   std::optional<std::shared_ptr<const BasicGraph>> opt_g;
   while ((opt_g = gen.next())) {
-    const BasicGraph& g = *opt_g.value();
+    const BasicGraph &g = *opt_g.value();
     GraphProto response;
     response.mutable_undirected()->set_graph6(
         graphbase::conversions::ToGraph6(g));
@@ -52,13 +52,13 @@ Status OracleServer::GetGraphs(ServerContext* context,
 
   return Status::OK;
 
-} catch (const std::exception& e) {
+} catch (const std::exception &e) {
   return Status(StatusCode::INTERNAL, e.what());
 }
 
-Status OracleServer::GetCount(ServerContext* context,
-                              const GraphsRequestProto* request,
-                              protos::services::Count* response) try {
+Status OracleServer::GetCount(ServerContext *context,
+                              const GraphsRequestProto *request,
+                              protos::services::Count *response) try {
   uint64_t count = 0;
   auto gen = m_oracle->GetUndirectedGraphsCount(KindFromRequest(request),
                                                 PredicateFromRequest(request));
@@ -70,6 +70,6 @@ Status OracleServer::GetCount(ServerContext* context,
   response->set_count(count);
   return Status::OK;
 
-} catch (const std::exception& e) {
+} catch (const std::exception &e) {
   return Status(StatusCode::INTERNAL, e.what());
 }

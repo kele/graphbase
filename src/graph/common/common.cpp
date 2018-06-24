@@ -31,5 +31,5 @@ bool operator==(const edge_t &lhs, const edge_t &rhs) {
   return lhs.m_e == rhs.m_e;
 }
 
-}  // namespace graph
-}  // namespace graphbase
+} // namespace graph
+} // namespace graphbase

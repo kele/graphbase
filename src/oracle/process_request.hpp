@@ -6,8 +6,8 @@
 
 using namespace graphbase;
 
-graphbase::graphsource::Kind KindFromRequest(
-    const protos::services::GraphsRequest* request);
+graphbase::graphsource::Kind
+KindFromRequest(const protos::services::GraphsRequest *request);
 
-std::shared_ptr<graph::predicates::Predicate> PredicateFromRequest(
-    const protos::services::GraphsRequest* request);
+std::shared_ptr<graph::predicates::Predicate>
+PredicateFromRequest(const protos::services::GraphsRequest *request);

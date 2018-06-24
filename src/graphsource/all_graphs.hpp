@@ -10,7 +10,7 @@ namespace undirected {
 
 // IncrementableBigNum is a bignum that starts at zero and can be incremented.
 class IncrementableBigNum {
- public:
+public:
   // Creates a bignum of `n` bits size.
   explicit IncrementableBigNum(size_t n);
 
@@ -21,7 +21,7 @@ class IncrementableBigNum {
   // Returns a big-endian representation of the bignum.
   const std::vector<bool> &vec() const;
 
- private:
+private:
   std::vector<bool> m_mask;
 };
 
@@ -35,7 +35,7 @@ struct OfSize {
   // Returns the next graph.
   std::optional<std::shared_ptr<BasicGraph>> operator()();
 
- private:
+private:
   size_t m_graphsize;
   IncrementableBigNum m_mask;
 };
@@ -46,7 +46,7 @@ using graphbase::graphsource::VariantGraph;
 
 // OfSizeSource is a GraphSource implementation of the OfSize generator.
 class OfSizeSource : public GraphSource {
- public:
+public:
   explicit OfSizeSource(size_t n);
 
   // Creates a new graph generator.
@@ -55,9 +55,9 @@ class OfSizeSource : public GraphSource {
   Kind SourceKind() const override;
   graph::GraphType SourceGraphType() const override;
 
- private:
+private:
   size_t m_size;
 };
 
-}  // namespace undirected
-}  // namespace graphbase
+} // namespace undirected
+} // namespace graphbase

@@ -17,7 +17,7 @@ namespace algo {
 // TODO(https://github.com/kele/graphbase/issues/5): write better spec (e.g. on
 // which edges is the F functor called)
 template <class G, class = is_undirected_graph<G>, class F>
-void BFS(const G& g, unsigned start, F f) {
+void BFS(const G &g, unsigned start, F f) {
   std::vector<bool> visited(g.vertices().size(), false);
   std::vector<bool> seen(g.vertices().size(), false);
   seen[start] = true;
@@ -29,13 +29,15 @@ void BFS(const G& g, unsigned start, F f) {
     unsigned v = q.front();
     q.pop();
 
-    if (visited[v]) continue;
+    if (visited[v])
+      continue;
     visited[v] = true;
 
-    for (const auto& e : g.edges().adjacent(v)) {
+    for (const auto &e : g.edges().adjacent(v)) {
       unsigned u = v == e.first() ? e.last() : e.first();
       f(v, u, !seen[u]);
-      if (seen[u]) continue;
+      if (seen[u])
+        continue;
       q.push(u);
       seen[u] = true;
     }
@@ -44,11 +46,11 @@ void BFS(const G& g, unsigned start, F f) {
 
 template <class G, class = is_undirected_graph<G>, class F,
           class = std::is_invocable<F, G, unsigned, bool>>
-void BFS(const G& g, unsigned start, const F&& f) {
+void BFS(const G &g, unsigned start, const F &&f) {
   BFS(g, start, std::ref(f));
 }
 
-}  // namespace algo
-}  // namespace undirected
-}  // namespace graph
-}  // namespace graphbase
+} // namespace algo
+} // namespace undirected
+} // namespace graph
+} // namespace graphbase

@@ -22,8 +22,7 @@ namespace directed {
  * This implementation allows for loops and multiple arcs between the same
  * vertices.
  */
-template <class Arc = arc_t>
-class Digraph {
+template <class Arc = arc_t> class Digraph {
   // TODO(Not ready yet)
   // public:
   //  explicit Digraph(size_t n) : m_arcs(n), m_num_arcs(0) {}
@@ -134,6 +133,6 @@ class Digraph {
 
 using BasicDigraph = Digraph<>;
 
-}  // namespace directed
-}  // namespace graph
-}  // namespace graphbase
+} // namespace directed
+} // namespace graph
+} // namespace graphbase

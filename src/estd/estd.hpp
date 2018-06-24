@@ -21,4 +21,4 @@ inline void require(bool cond, const char *msg, const char *call_site) {
   }
 }
 
-}  // namespace estd
+} // namespace estd

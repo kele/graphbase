@@ -9,7 +9,7 @@ enum class GraphType { Undirected, Directed };
 
 // Directed arc (edge).
 class arc_t {
- public:
+public:
   arc_t(unsigned first, unsigned last);
 
   unsigned first() const { return m_first; }
@@ -19,13 +19,13 @@ class arc_t {
     return arc_t{arc.last(), arc.first()};
   }
 
- protected:
+protected:
   unsigned m_first, m_last;
 };
 
 // Undirected edge.
 class edge_t {
- public:
+public:
   edge_t(unsigned first, unsigned last);
 
   unsigned first() const { return m_e.first; }
@@ -35,12 +35,12 @@ class edge_t {
 
   friend bool operator==(const edge_t &lhs, const edge_t &rhs);
 
- protected:
+protected:
   std::pair<unsigned, unsigned> m_e;
 
- private:
+private:
   void normalize();
 };
 
-}  // namespace graph
-}  // namespace graphbase
+} // namespace graph
+} // namespace graphbase

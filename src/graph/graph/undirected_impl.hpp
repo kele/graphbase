@@ -35,6 +35,6 @@ const std::vector<unsigned> &Graph<void, EdgeContainer>::vertices() const {
   return m_vertices;
 }
 
-}  // namespace undirected
-}  // namespace graph
-}  // namespace graphbase
+} // namespace undirected
+} // namespace graph
+} // namespace graphbase

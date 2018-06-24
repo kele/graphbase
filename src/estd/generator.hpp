@@ -3,9 +3,8 @@
 namespace estd {
 
 // generator provides a (possibly infinite) stream of values
-template <class V>
-class generator {
- public:
+template <class V> class generator {
+public:
   // generator receives a function used to create values. On each call of
   // generator::next(), the given function is being called.
   explicit generator(std::function<std::optional<V>()> f) : m_f(std::move(f)) {}
@@ -30,8 +29,8 @@ class generator {
     return generator(std::move(f));
   }
 
- private:
+private:
   std::function<std::optional<V>()> m_f;
 };
 
-}  // namespace estd
+} // namespace estd

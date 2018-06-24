@@ -16,7 +16,7 @@ struct AdjacentEdges : public std::vector<edge_t> {
   // Returns the vertex the edges are adjacent to.
   unsigned vertex() const;
 
- private:
+private:
   unsigned m_vertex;
 };
 
@@ -32,12 +32,10 @@ struct AdjacentEdges : public std::vector<edge_t> {
 // Therefore, if your main use case is adding/removing the edges and checking
 // if a given edge is present, while rarely needing to traverse all the
 // (adjacent) edges, this implementation is not for you.
-template <class EdgeData>
-class VectorEdgeContainer;
+template <class EdgeData> class VectorEdgeContainer;
 
-template <>
-class VectorEdgeContainer<void> {
- public:
+template <> class VectorEdgeContainer<void> {
+public:
   // Cost: O(V)
   explicit VectorEdgeContainer(size_t n);
 
@@ -47,16 +45,16 @@ class VectorEdgeContainer<void> {
 
   // Returns the edges adjacent to a given vertex.
   // Cost: O(1)
-  const AdjacentEdges& adjacent(unsigned v) const;
+  const AdjacentEdges &adjacent(unsigned v) const;
 
   // Returns a vector containing adjacent edges lists for each vertex. The
   // vector is indexed by vertices.
   // Cost: O(1)
-  const std::vector<AdjacentEdges>& vectors() const;
+  const std::vector<AdjacentEdges> &vectors() const;
 
   // Applies a function to each edge.
   // Cost: O(V + E)
-  void for_each(std::function<void(const edge_t&)> f) const;
+  void for_each(std::function<void(const edge_t &)> f) const;
 
   // Removes edges adjacent to a given vertex.
   // Cost: O(V + E)
@@ -71,11 +69,11 @@ class VectorEdgeContainer<void> {
   // Cost: O(1)
   void add(edge_t e);
 
- private:
+private:
   std::vector<AdjacentEdges> m_edges;
   size_t m_num_edges;
 };
 
-}  // namespace undirected
-}  // namespace graph
-}  // namespace graphbase
+} // namespace undirected
+} // namespace graph
+} // namespace graphbase
