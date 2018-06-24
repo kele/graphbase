@@ -16,6 +16,12 @@ int main(int argc, char *argv[]) {
   OracleClient client(grpc::CreateChannel("localhost:51000",
                                           grpc::InsecureChannelCredentials()));
 
+  if (argc <= 1) {
+    std::cerr << "Missing arguments. Each argument should be a request protocol buffer." << std::endl;
+    return -1;
+  }
+
+  std::cout << "Processing " << argc - 1 << " requests..." << std::endl;
   for (int i = 1; i < argc; i++) {
     protos::services::GraphsRequest request;
     GraphRequestFromFile(argv[i], &request);
