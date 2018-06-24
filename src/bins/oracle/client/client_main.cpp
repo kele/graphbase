@@ -7,7 +7,7 @@
 
 #include "protos/sv_oracle.grpc.pb.h"
 
-#include "bins/oracle/client.hpp"
+#include "bins/oracle/client/client.hpp"
 
 void GraphRequestFromFile(std::string filename,
                           protos::services::GraphsRequest *request);

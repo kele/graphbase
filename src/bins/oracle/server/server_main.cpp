@@ -3,7 +3,7 @@
 
 #include <grpc++/grpc++.h>
 
-#include "bins/oracle/server.hpp"
+#include "bins/oracle/server/server.hpp"
 #include "graph/algo/bipartite.hpp"
 #include "graphsource/all_graphs.hpp"
 #include "oracle/oracle.hpp"
