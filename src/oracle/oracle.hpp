@@ -19,18 +19,9 @@ using graphbase::graphsource::Kind;
 
 class Oracle {
 public:
-  void RegisterSource(Kind source_kind, std::unique_ptr<GraphSource> source);
-
   estd::generator<std::shared_ptr<const BasicGraph>>
   GetUndirectedGraphs(Kind source_kind,
                       std::shared_ptr<const Predicate> p) const;
-
-  estd::generator<size_t>
-  GetUndirectedGraphsCount(Kind source_kind,
-                           std::shared_ptr<const Predicate> p) const;
-
-private:
-  std::map<Kind, std::unique_ptr<GraphSource>> m_sources;
 };
 
 } // namespace graphbase

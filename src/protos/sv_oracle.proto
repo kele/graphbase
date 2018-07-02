@@ -1,57 +1,19 @@
 syntax = "proto3";
 
-package protos.services;
-import "graph.proto";
+package oracle;
 
-// Oracle answers questions about graphs.
 service Oracle {
-    // GetGraphs returns the graphs retrieved using GraphInputSpec that pass the
-    // given predicate.
-    rpc GetGraphs(GraphsRequest) returns (stream Graph) {}
-
-    // GetCount returns the count of graphs retrieved using GraphInputSpec that
-    // pass the given predicate.
-    rpc GetCount(GraphsRequest) returns (Count) {}
+    rpc ListGraphs(ListGraphsRequest) returns (ListGraphsResponse) {}
 }
 
-// GraphsRequest is the request type for Oracle.GetGraphs and Oracle.GetCount RPCs.
-// Next ID = 4
-message GraphsRequest {
-    // Contains the input specification.
-    GraphInputSpec input_spec = 1;
-
-    // Predicate used for the filter request.
-    Predicate predicate = 2;
-
-    // Limit
-    uint64  limit = 3;
+message ListGraphsRequest {
+    //Domain domain = 1;
+    //Predicate predicate = 2;
+    string page_token = 3;
+    uint64 max_page_size = 4;
 }
 
-// Count represents the count.
-// Next ID = 2
-message Count {
-    uint64 count = 1;
+message ListGraphsResponse {
+    //repeated Graph graphs = 1;
+    string next_page_token = 2;
 }
-
-// GraphInputSpec is the graph input specification passed to Oracle.
-// Next ID = 2
-message GraphInputSpec {
-  oneof input {
-    AllGraphsWithRepetitions all_graphs_with_repetitions = 1;
-  }
-}
-
-// AllGraphsWithRepetitions
-message AllGraphsWithRepetitions {
-  uint64 size = 1;
-}
-
-// Predicate represents a predicate taking a graph as the input.
-// Next ID = 1
-message Predicate {
-  oneof predicate {
-    IsBipartite is_bipartite = 1;
-  }
-}
-
-message IsBipartite {}

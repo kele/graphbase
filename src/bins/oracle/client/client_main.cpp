@@ -10,7 +10,7 @@
 #include "bins/oracle/client/client.hpp"
 
 void GraphRequestFromFile(std::string filename,
-                          protos::services::GraphsRequest *request);
+                          oracle::ListGraphsRequest *request);
 
 int main(int argc, char *argv[]) {
   OracleClient client(grpc::CreateChannel("localhost:51000",
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 
   std::cout << "Processing " << argc - 1 << " requests..." << std::endl;
   for (int i = 1; i < argc; i++) {
-    protos::services::GraphsRequest request;
+    oracle::ListGraphsRequest request;
     GraphRequestFromFile(argv[i], &request);
 
     std::cout << "#############################################" << std::endl;
@@ -41,7 +41,7 @@ int main(int argc, char *argv[]) {
 }
 
 void GraphRequestFromFile(std::string filename,
-                          protos::services::GraphsRequest *request) {
+                          oracle::ListGraphsRequest *request) {
   std::ifstream f(filename);
   google::protobuf::io::IstreamInputStream is(&f);
   auto parser = google::protobuf::TextFormat::Parser();

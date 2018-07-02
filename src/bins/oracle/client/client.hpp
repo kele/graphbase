@@ -11,8 +11,8 @@ public:
   explicit OracleClient(std::shared_ptr<grpc::Channel> channel);
 
   // PrintGraphs prints the graphs got using the given request.
-  grpc::Status PrintGraphs(const protos::services::GraphsRequest &request);
+  grpc::Status PrintGraphs(const oracle::ListGraphsRequest &request);
 
 protected:
-  std::unique_ptr<protos::services::Oracle::Stub> m_stub;
+  std::unique_ptr<oracle::Oracle::Stub> m_stub;
 };
