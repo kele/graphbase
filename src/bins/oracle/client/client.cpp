@@ -18,5 +18,4 @@ OracleClient::OracleClient(std::shared_ptr<grpc::Channel> channel)
 
 grpc::Status OracleClient::PrintGraphs(const ListGraphsRequest &request) {
   throw std::runtime_error("Not implemented.");
-
 }
