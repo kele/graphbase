@@ -1,5 +1,6 @@
 #include "query/bind.hpp"
 #include "query/expression.hpp"
+#include "query/value.hpp"
 
 namespace query {
 

@@ -5,6 +5,7 @@
 #include "query/expression.hpp"
 #include "query/value.hpp"
 
+#include <optional>
 #include <string>
 #include <vector>
 

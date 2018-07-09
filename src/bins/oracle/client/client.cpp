@@ -4,7 +4,6 @@
 
 #include <grpc++/grpc++.h>
 
-#include "protos/graph.pb.h"
 #include "protos/sv_oracle.grpc.pb.h"
 
 using oracle::ListGraphsRequest;

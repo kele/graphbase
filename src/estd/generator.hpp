@@ -1,5 +1,8 @@
 #pragma once
 
+#include <functional>
+#include <optional>
+
 namespace estd {
 
 // generator provides a (possibly infinite) stream of values
