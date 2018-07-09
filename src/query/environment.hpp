@@ -10,6 +10,8 @@ namespace query {
 
 class Environment {
 public:
+  Environment() = default;
+
   explicit Environment(const Binding &b);
   explicit Environment(Binding &&b);
 

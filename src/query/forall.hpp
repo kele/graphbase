@@ -1,24 +1,30 @@
 #pragma once
 
 #include "estd/estd.hpp"
-#include "query/bind.hpp"
 #include "query/environment.hpp"
 #include "query/expression.hpp"
+#include "query/quantifier_bind.hpp"
 
 namespace query {
 
-class ForAll {
+class ForAll : public Expression<ForAll> {
 public:
-  static estd::result<ForAll> build(Bind bind, Expression expr);
+  static std::shared_ptr<const ForAll>
+  build(std::shared_ptr<const QuantifierBind> bind,
+        std::shared_ptr<const IExpression> expr);
 
-  Value eval(const Environment &env) const;
+protected:
+  ForAll(std::shared_ptr<const QuantifierBind> bind,
+         std::shared_ptr<const IExpression> expr);
 
 private:
   ForAll() = delete;
-  ForAll(Bind bind, Expression expr);
 
-  Bind m_bind;
-  Expression m_expr;
+  friend class Expression<ForAll>;
+  Value evalImpl(const Environment &env) const;
+
+  std::shared_ptr<const QuantifierBind> m_bind;
+  std::shared_ptr<const IExpression> m_expr;
 };
 
 } // namespace query

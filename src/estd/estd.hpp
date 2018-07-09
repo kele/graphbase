@@ -63,4 +63,10 @@ template <class R> struct result : either<R, std::exception> {
   bool is_err() const { return this->is_right(); }
 };
 
+template <class T> class enable_make_shared : public T {
+public:
+  template <class... Args>
+  enable_make_shared(Args &&... args) : T(std::forward<Args>(args)...) {}
+};
+
 } // namespace estd

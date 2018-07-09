@@ -10,7 +10,7 @@ Environment::Environment(Binding &&b) : m_binding{std::move(b)} {}
 Environment Environment::extend(const Environment &env, const Binding &b) {
   Environment new_env(env);
   for (const auto &kv : b) {
-    new_env.add(kv.first, kv.second);
+    new_env.add(kv.first, kv.second->eval(env));
   }
   return new_env;
 }

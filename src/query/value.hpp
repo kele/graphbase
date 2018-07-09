@@ -23,6 +23,8 @@ public:
     return std::experimental::any_cast<T>(m_value);
   }
 
+  template <class T> bool holds() const { return m_value.type() == typeid(T); }
+
   Value(const Value &v) : m_value(v.m_value) {}
   Value(Value &&v) : m_value(std::move(v.m_value)) {}
 
