@@ -3,21 +3,21 @@
 #include <memory>
 #include <optional>
 
-#include "query/expression.hpp"
+#include "query/iexpression.hpp"
 #include "query/value.hpp"
 
 namespace query {
 
-class Var : public Expression<Var> {
+class Var : public IExpression {
 public:
-  static Var build(const Environment &env, std::string name);
+  static std::shared_ptr<Var> build(std::string name);
 
-private:
+  Value eval(std::shared_ptr<const Environment> env) const final;
+
+protected:
   explicit Var(std::string name);
 
-  friend class Expression<Var>;
-  Value evalImpl(const Environment &env) const;
-
+private:
   std::string m_name;
 };
 

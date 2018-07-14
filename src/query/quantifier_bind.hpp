@@ -1,8 +1,9 @@
 #pragma once
 
 #include "estd/estd.hpp"
+#include "estd/generator.hpp"
 #include "query/binding.hpp"
-#include "query/expression.hpp"
+#include "query/iexpression.hpp"
 #include "query/list.hpp"
 #include "query/value.hpp"
 
@@ -15,15 +16,14 @@ namespace query {
 class QuantifierBind {
 public:
   static std::shared_ptr<QuantifierBind>
-  build(std::vector<std::string> names, std::shared_ptr<const List> expr);
-
-  static std::shared_ptr<QuantifierBind>
   build(std::string name, std::shared_ptr<const List> expr);
 
-  estd::generator<const Binding> iterate() const;
+  estd::generator<const Binding>
+  iterate(std::shared_ptr<const Environment> env) const;
 
 protected:
-  QuantifierBind(std::vector<std::string> names, estd::generator<std::shared_ptr<const IExpression>> domain);
+  QuantifierBind(std::string name,
+                 estd::generator<std::shared_ptr<const IExpression>> domain);
 
 private:
   QuantifierBind() = delete;

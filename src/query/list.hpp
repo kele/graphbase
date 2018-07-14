@@ -13,6 +13,9 @@ public:
   static std::shared_ptr<const List>
   build(std::vector<std::shared_ptr<const IExpression>> elements);
 
+  static std::shared_ptr<const List>
+  build(std::initializer_list<std::shared_ptr<const IExpression>> elements);
+
   const std::vector<std::shared_ptr<const IExpression>> &values() const {
     return m_elements;
   }

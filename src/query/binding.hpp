@@ -1,13 +1,12 @@
 #pragma once
 
 #include <map>
-#include <string>
 #include <memory>
+#include <string>
 
-#include "query/expression.hpp"
-
+#include "query/value.hpp"
 
 namespace query {
-using Binding = std::map<std::string, std::shared_ptr<const IExpression>>;
+using Binding = std::map<std::string, const Value>;
 
 } // namespace query

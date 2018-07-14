@@ -84,7 +84,7 @@ TEST_CASE("Simple environment extension", "[environment]") {
       {"c", Value::from<std::string>("blahblahblah")}
   });;
 
-  auto extended = Environment::extend(env, Binding{{"b", Value::from<int>(7)}});
+  Environment extended(env, Binding{{"b", Value::from<int>(7)}});
 
   auto a = extended.get("a");
   REQUIRE(a.has_value());
@@ -111,7 +111,7 @@ TEST_CASE("Shadowing environment extension", "[environment]") {
       {"c", Value::from<std::string>("blahblahblah")}
   });;
 
-  auto extended = Environment::extend(env, Binding{{"c", Value::from<std::string>("shadowed")}});
+  Environment extended(env, Binding{{"c", Value::from<std::string>("shadowed")}});
 
   auto a = extended.get("a");
   REQUIRE(a.has_value());

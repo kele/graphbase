@@ -14,8 +14,7 @@ public:
 
   explicit Environment(const Binding &b);
   explicit Environment(Binding &&b);
-
-  static Environment extend(const Environment &env, const Binding &b);
+  Environment(const Environment &base, const Binding &b);
 
   std::optional<std::reference_wrapper<const Value>>
   get(const std::string &name) const;

@@ -1,15 +1,15 @@
 #include "query/var.hpp"
+#include "estd/estd.hpp"
 #include "query/environment.hpp"
 
 namespace query {
 
-Var Var::build(const Environment &env, std::string name) {
-  // TODO: check if var is in env
-  return Var(std::move(name));
+std::shared_ptr<Var> Var::build(std::string name) {
+  return std::make_shared<estd::enable_make_shared<Var>>(std::move(name));
 }
 
-Value Var::evalImpl(const Environment &env) const {
-  return env.get(m_name).value();
+Value Var::eval(std::shared_ptr<const Environment> env) const {
+  return env->get(m_name).value();
 }
 
 Var::Var(std::string name) : m_name(std::move(name)) {}

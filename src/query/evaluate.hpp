@@ -2,7 +2,7 @@
 
 #include "query/conversions/conversions.hpp"
 #include "query/environment.hpp"
-#include "query/expression.hpp"
+#include "query/iexpression.hpp"
 
 #include <map>
 #include <stdexcept>
@@ -11,7 +11,8 @@
 namespace query {
 
 template <class T>
-std::optional<T> evaluate(const Environment &env, const IExpression &expr) {
+std::optional<T> evaluate(std::shared_ptr<const Environment> env,
+                          const IExpression &expr) {
   return conversions::to<T>(expr.eval(env));
 }
 

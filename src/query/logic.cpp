@@ -4,31 +4,33 @@
 
 namespace query {
 
+// True
 std::shared_ptr<True> True::build() {
   return std::make_shared<estd::enable_make_shared<True>>();
 }
 
-Value True::evalImpl(const Environment &env) const {
+Value True::eval(std::shared_ptr<const Environment>) const {
   return Value::from<bool>(true);
 }
 
+// False
 std::shared_ptr<False> False::build() {
   return std::make_shared<estd::enable_make_shared<False>>();
 }
 
-Value False::evalImpl(const Environment &env) const {
+Value False::eval(std::shared_ptr<const Environment>) const {
   return Value::from<bool>(false);
 }
 
-Not Not::build(const Environment &env, std::unique_ptr<Expression> expr) {
-  // TODO: Typecheck.
-  return Not(std::move(expr));
+// Not
+std::shared_ptr<Not> Not::build(std::shared_ptr<const IExpression> expr) {
+  return std::make_shared<estd::enable_make_shared<Not>>(std::move(expr));
 }
 
-Not::Not(std::unique_ptr<Expression> expr) : m_expr(std::move(expr)) {}
+Not::Not(std::shared_ptr<const IExpression> expr) : m_expr(std::move(expr)) {}
 
-Value Not::evalImpl(const Environment &env) const {
-  return Value::from<bool>(evaluate<bool>(env, *m_expr).value());
+Value Not::eval(std::shared_ptr<const Environment> env) const {
+  return Value::from<bool>(!evaluate<bool>(env, *m_expr).value());
 }
 
 } // namespace query

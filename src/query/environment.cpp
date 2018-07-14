@@ -7,12 +7,11 @@ Environment::Environment(const Binding &b) : m_binding{b} {}
 
 Environment::Environment(Binding &&b) : m_binding{std::move(b)} {}
 
-Environment Environment::extend(const Environment &env, const Binding &b) {
-  Environment new_env(env);
+Environment::Environment(const Environment &env, const Binding &b)
+    : Environment(env) {
   for (const auto &kv : b) {
-    new_env.add(kv.first, kv.second->eval(env));
+    this->add(kv.first, kv.second);
   }
-  return new_env;
 }
 
 std::optional<std::reference_wrapper<const Value>>
