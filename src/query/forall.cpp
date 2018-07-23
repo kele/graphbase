@@ -7,13 +7,6 @@
 
 namespace query {
 
-std::shared_ptr<const ForAll>
-ForAll::build(std::shared_ptr<const QuantifierBind> bind,
-              std::shared_ptr<const IExpression> expr) {
-  return std::make_shared<estd::enable_make_shared<ForAll>>(std::move(bind),
-                                                            std::move(expr));
-}
-
 Value ForAll::eval(std::shared_ptr<const Environment> env) const {
   auto gen = m_bind->iterate(env);
   while (true) {

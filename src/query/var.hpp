@@ -1,22 +1,21 @@
 #pragma once
 
-#include <memory>
-#include <optional>
-
+#include "estd/estd.hpp"
 #include "query/iexpression.hpp"
 #include "query/value.hpp"
 
+#include <memory>
+#include <optional>
+
 namespace query {
 
-class Var : public IExpression {
+class Var : public IExpression, public estd::shared<Var> {
 public:
-  static std::shared_ptr<Var> build(std::string name);
+  explicit Var(std::string name);
 
   Value eval(std::shared_ptr<const Environment> env) const final;
 
 protected:
-  explicit Var(std::string name);
-
 private:
   std::string m_name;
 };

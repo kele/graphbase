@@ -13,17 +13,14 @@
 #include <vector>
 
 namespace query {
-class QuantifierBind {
+class QuantifierBind : public estd::shared<QuantifierBind> {
 public:
-  static std::shared_ptr<QuantifierBind>
-  build(std::string name, std::shared_ptr<const List> expr);
+  QuantifierBind(std::string name, std::shared_ptr<const List> list);
+  QuantifierBind(std::string name,
+                 estd::generator<std::shared_ptr<const IExpression>> domain);
 
   estd::generator<const Binding>
   iterate(std::shared_ptr<const Environment> env) const;
-
-protected:
-  QuantifierBind(std::string name,
-                 estd::generator<std::shared_ptr<const IExpression>> domain);
 
 private:
   QuantifierBind() = delete;

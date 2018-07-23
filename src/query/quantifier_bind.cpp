@@ -6,8 +6,8 @@
 
 namespace query {
 
-std::shared_ptr<QuantifierBind>
-QuantifierBind::build(std::string name, std::shared_ptr<const List> expr) {
+estd::generator<std::shared_ptr<const IExpression>>
+fromList(std::shared_ptr<const List> expr) {
   auto f = [expr, it = expr->values().begin()]() mutable
       -> std::optional<std::shared_ptr<const IExpression>> {
     if (it == expr->values().end()) {
@@ -17,9 +17,12 @@ QuantifierBind::build(std::string name, std::shared_ptr<const List> expr) {
     it++;
     return v;
   };
-  return std::make_shared<estd::enable_make_shared<QuantifierBind>>(
-      std::move(name), estd::generator<std::shared_ptr<const IExpression>>(f));
+  return estd::generator<std::shared_ptr<const IExpression>>(f);
 }
+
+QuantifierBind::QuantifierBind(std::string name,
+                               std::shared_ptr<const List> expr)
+    : QuantifierBind(name, fromList(expr)) {}
 
 estd::generator<const Binding>
 QuantifierBind::iterate(std::shared_ptr<const Environment> env) const {

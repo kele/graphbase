@@ -1,6 +1,7 @@
 #pragma once
 
 #include <functional>
+#include <memory>
 #include <variant>
 
 namespace estd {
@@ -63,10 +64,11 @@ template <class R> struct result : either<R, std::exception> {
   bool is_err() const { return this->is_right(); }
 };
 
-template <class T> class enable_make_shared : public T {
+template <class T> class shared {
 public:
-  template <class... Args>
-  enable_make_shared(Args &&... args) : T(std::forward<Args>(args)...) {}
+  template <class... Args> static std::shared_ptr<T> build(Args &&... args) {
+    return std::make_shared<T>(std::forward<Args>(args)...);
+  };
 };
 
 } // namespace estd

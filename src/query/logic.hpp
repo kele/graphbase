@@ -1,41 +1,29 @@
 #pragma once
 
-#include <memory>
-#include <optional>
-
+#include "estd/estd.hpp"
 #include "query/iexpression.hpp"
 #include "query/value.hpp"
 
+#include <memory>
+#include <optional>
+
 namespace query {
 
-class True : public IExpression {
+class True : public IExpression, public estd::shared<True> {
 public:
-  static std::shared_ptr<True> build();
-
   Value eval(std::shared_ptr<const Environment> env) const final;
-
-protected:
-  True() = default;
 };
 
-class False : public IExpression {
+class False : public IExpression, public estd::shared<False> {
 public:
-  static std::shared_ptr<False> build();
-
   Value eval(std::shared_ptr<const Environment> env) const final;
-
-protected:
-  False() = default;
 };
 
-class Not : public IExpression {
+class Not : public IExpression, public estd::shared<Not> {
 public:
-  static std::shared_ptr<Not> build(std::shared_ptr<const IExpression> expr);
-
-  Value eval(std::shared_ptr<const Environment> env) const final;
-
-protected:
   explicit Not(std::shared_ptr<const IExpression> expr);
+
+  Value eval(std::shared_ptr<const Environment> env) const final;
 
 private:
   std::shared_ptr<const IExpression> m_expr;
