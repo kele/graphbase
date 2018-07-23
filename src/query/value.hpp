@@ -1,38 +1,47 @@
 #pragma once
 
-#include <experimental/any>
+#include "patterns/istream.hpp"
+
 #include <optional>
 #include <stdexcept>
 #include <type_traits>
+#include <variant>
+#include <vector>
 
 namespace query {
 
 class Value {
 public:
-  template <class T> static Value from(T v) {
-    return Value(std::experimental::any(v));
-  }
+  using Boolean = bool;
+  using Integer = int;
+  class Stream : public patterns::IStream<std::unique_ptr<Value>> {
+  public:
+    std::optional<std::unique_ptr<Value>> next() final {
+      throw std::logic_error("Value::Stream::next() not implemented.");
+    }
+  };
+  using Vector = std::vector<Value>;
+
+  using variant = std::variant<Boolean, Integer, Stream, Vector>;
+
+  template <class T> static Value from(T v) { return Value(variant(v)); }
 
   template <class T> std::optional<T> get() const {
-    if (m_value.empty()) {
-      return std::nullopt;
-    }
-    if (typeid(T) != m_value.type()) {
-      return std::nullopt;
-    }
-    return std::experimental::any_cast<T>(m_value);
+    return holds<T>() ? std::make_optional(std::get<T>(m_value)) : std::nullopt;
   }
 
-  template <class T> bool holds() const { return m_value.type() == typeid(T); }
+  template <class T> bool holds() const {
+    return std::holds_alternative<T>(m_value);
+  }
 
-  Value(const Value &v) : m_value(v.m_value) {}
-  Value(Value &&v) : m_value(std::move(v.m_value)) {}
+  Value(const Value &v) = default;
+  Value(Value &&v) = default;
 
 private:
   Value() = delete;
-  explicit Value(std::experimental::any v) : m_value(v) {}
+  Value(variant v) : m_value(std::move(v)) {}
 
-  std::experimental::any m_value;
+  variant m_value;
 };
 
 } // namespace query

@@ -8,7 +8,7 @@ TEST_CASE("Simple environment", "[environment]") {
   Environment env(Binding{
       {"a", Value::from<int>(10)},
       {"b", Value::from<int>(7)},
-      {"c", Value::from<std::string>("blahblahblah")}
+      {"c", Value::from<int>(12345678)}
   });;
 
   auto a = env.get("a");
@@ -25,15 +25,15 @@ TEST_CASE("Simple environment", "[environment]") {
 
   auto c = env.get("c");
   REQUIRE(c.has_value());
-  auto c_v = c.value().get().get<std::string>();
+  auto c_v = c.value().get().get<int>();
   REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == "blahblahblah");
+  REQUIRE(*c_v == 12345678);
 }
 
 TEST_CASE("Add variable to environment", "[environment]") {
   Environment env(Binding{
       {"a", Value::from<int>(10)},
-      {"c", Value::from<std::string>("blahblahblah")}
+      {"c", Value::from<int>(12345678)}
   });;
 
   env.add("b", Value::from<int>(7));
@@ -52,18 +52,18 @@ TEST_CASE("Add variable to environment", "[environment]") {
 
   auto c = env.get("c");
   REQUIRE(c.has_value());
-  auto c_v = c.value().get().get<std::string>();
+  auto c_v = c.value().get().get<int>();
   REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == "blahblahblah");
+  REQUIRE(*c_v == 12345678);
 }
 
 TEST_CASE("Add shadowing variable to environment", "[environment]") {
   Environment env(Binding{
       {"a", Value::from<int>(10)},
-      {"c", Value::from<std::string>("blahblahblah")}
+      {"c", Value::from<int>(12345678)}
   });;
 
-  env.add("c", Value::from<std::string>("shadowed"));
+  env.add("c", Value::from<int>(9876));
 
   auto a = env.get("a");
   REQUIRE(a.has_value());
@@ -73,15 +73,15 @@ TEST_CASE("Add shadowing variable to environment", "[environment]") {
 
   auto c = env.get("c");
   REQUIRE(c.has_value());
-  auto c_v = c.value().get().get<std::string>();
+  auto c_v = c.value().get().get<int>();
   REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == "shadowed");
+  REQUIRE(*c_v == 9876);
 }
 
 TEST_CASE("Simple environment extension", "[environment]") {
   Environment env(Binding{
       {"a", Value::from<int>(10)},
-      {"c", Value::from<std::string>("blahblahblah")}
+      {"c", Value::from<int>(12345678)}
   });;
 
   Environment extended(env, Binding{{"b", Value::from<int>(7)}});
@@ -100,18 +100,18 @@ TEST_CASE("Simple environment extension", "[environment]") {
 
   auto c = extended.get("c");
   REQUIRE(c.has_value());
-  auto c_v = c.value().get().get<std::string>();
+  auto c_v = c.value().get().get<int>();
   REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == "blahblahblah");
+  REQUIRE(*c_v == 12345678);
 }
 
 TEST_CASE("Shadowing environment extension", "[environment]") {
   Environment env(Binding{
       {"a", Value::from<int>(10)},
-      {"c", Value::from<std::string>("blahblahblah")}
+      {"c", Value::from<int>(12345678)}
   });;
 
-  Environment extended(env, Binding{{"c", Value::from<std::string>("shadowed")}});
+  Environment extended(env, Binding{{"c", Value::from<int>(9876)}});
 
   auto a = extended.get("a");
   REQUIRE(a.has_value());
@@ -121,7 +121,7 @@ TEST_CASE("Shadowing environment extension", "[environment]") {
 
   auto c = extended.get("c");
   REQUIRE(c.has_value());
-  auto c_v = c.value().get().get<std::string>();
+  auto c_v = c.value().get().get<int>();
   REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == "shadowed");
+  REQUIRE(*c_v == 9876);
 }
