@@ -1,47 +1,32 @@
 #include "query/quantifier_bind.hpp"
-#include "estd/generator.hpp"
+#include "patterns/istream.hpp"
 #include "query/conversions/conversions.hpp"
+#include "query/evaluate.hpp"
 #include "query/iexpression.hpp"
 #include "query/value.hpp"
 
 namespace query {
 
-estd::generator<std::shared_ptr<const IExpression>>
-fromList(std::shared_ptr<const List> expr) {
-  auto f = [expr, it = expr->values().begin()]() mutable
-      -> std::optional<std::shared_ptr<const IExpression>> {
-    if (it == expr->values().end()) {
-      return std::nullopt;
-    }
-    auto v = std::make_optional(*it);
-    it++;
-    return v;
-  };
-  return estd::generator<std::shared_ptr<const IExpression>>(f);
-}
-
 QuantifierBind::QuantifierBind(std::string name,
-                               std::shared_ptr<const List> expr)
-    : QuantifierBind(name, fromList(expr)) {}
+                               std::shared_ptr<const IExpression> domain)
+    : m_name(name), m_domain(domain) {}
 
-estd::generator<const Binding>
+std::unique_ptr<patterns::IStream<const Binding>>
 QuantifierBind::iterate(std::shared_ptr<const Environment> env) const {
-  auto f = [domain = m_domain, name = m_name,
-            env = env]() mutable -> std::optional<const Binding> {
-    auto opt_v = domain.next();
-    if (not opt_v.has_value()) {
-      return std::nullopt;
-    }
-    Binding b;
-    b.emplace(name, opt_v.value()->eval(env));
-    return std::make_optional(b);
-  };
-  return estd::generator<const Binding>(std::move(f));
+  // TODO: lazy evaluation
+  auto list = evaluate<std::vector<Value>>(env, *m_domain);
+  return std::make_unique<BindingStream>(m_name, std::move(*list));
 }
 
-QuantifierBind::QuantifierBind(
-    std::string name,
-    estd::generator<std::shared_ptr<const IExpression>> domain)
-    : m_name(name), m_domain(domain) {}
+QuantifierBind::BindingStream::BindingStream(std::string name,
+                                             std::vector<Value> values)
+    : m_name(name), m_values(std::move(values)) {}
+
+std::optional<const Binding> QuantifierBind::BindingStream::next() {
+  if (m_next >= m_values.size()) {
+    return std::nullopt;
+  }
+  return Binding{{m_name, m_values[m_next++]}};
+}
 
 } // namespace query

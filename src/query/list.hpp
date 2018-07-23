@@ -1,26 +1,28 @@
 #pragma once
 
+#include "estd/estd.hpp"
+#include "query/iexpression.hpp"
+
 #include <memory>
 #include <vector>
 
 namespace query {
 
 class Environment;
-class IExpression;
 
-class List {
+class List : public IExpression, public estd::shared<List> {
 public:
-  static std::shared_ptr<const List>
-  build(std::vector<std::shared_ptr<const IExpression>> elements);
-
-  static std::shared_ptr<const List>
-  build(std::initializer_list<std::shared_ptr<const IExpression>> elements);
-
   const std::vector<std::shared_ptr<const IExpression>> &values() const {
     return m_elements;
   }
 
-  List(std::vector<std::shared_ptr<const IExpression>> elements)
+  Value eval(std::shared_ptr<const Environment> env) const final;
+
+  explicit List(
+      std::initializer_list<std::shared_ptr<const IExpression>> elements)
+      : m_elements(elements) {}
+
+  explicit List(std::vector<std::shared_ptr<const IExpression>> elements)
       : m_elements(elements) {}
 
 private:

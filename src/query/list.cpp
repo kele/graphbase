@@ -2,14 +2,12 @@
 
 namespace query {
 
-std::shared_ptr<const List>
-List::build(std::vector<std::shared_ptr<const IExpression>> elements) {
-  return std::make_shared<const List>(elements);
-}
-
-std::shared_ptr<const List> List::build(
-    std::initializer_list<std::shared_ptr<const IExpression>> elements) {
-  return build(std::vector<std::shared_ptr<const IExpression>>{elements});
+Value List::eval(std::shared_ptr<const Environment> env) const {
+  std::vector<Value> vs;
+  for (const auto &e : m_elements) {
+    vs.push_back(e->eval(env));
+  }
+  return Value::from<std::vector<Value>>(vs);
 }
 
 } // namespace query
