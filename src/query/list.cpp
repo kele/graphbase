@@ -7,7 +7,7 @@ Value List::eval(std::shared_ptr<const Environment> env) const {
   for (const auto &e : m_elements) {
     vs.push_back(e->eval(env));
   }
-  return Value::from<std::vector<Value>>(vs);
+  return Value::of<std::vector<Value>>(vs);
 }
 
 } // namespace query

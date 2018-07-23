@@ -10,21 +10,30 @@
 
 namespace query {
 
+class Value;
+using Boolean = bool;
+
+struct Integer {
+  Integer(int v) : value(v) {}
+  int value;
+  operator int() const { return value; }
+};
+
+class Stream : public patterns::IStream<std::unique_ptr<Value>> {
+public:
+  std::optional<std::unique_ptr<Value>> next() final {
+    throw std::logic_error("Value::Stream::next() not implemented.");
+  }
+};
+
+// TODO: get rid of vector
+using Vector = std::vector<Value>;
+
 class Value {
 public:
-  using Boolean = bool;
-  using Integer = int;
-  class Stream : public patterns::IStream<std::unique_ptr<Value>> {
-  public:
-    std::optional<std::unique_ptr<Value>> next() final {
-      throw std::logic_error("Value::Stream::next() not implemented.");
-    }
-  };
-  using Vector = std::vector<Value>;
-
   using variant = std::variant<Boolean, Integer, Stream, Vector>;
 
-  template <class T> static Value from(T v) { return Value(variant(v)); }
+  template <class T> static Value of(T v) { return Value(variant(v)); }
 
   template <class T> std::optional<T> get() const {
     return holds<T>() ? std::make_optional(std::get<T>(m_value)) : std::nullopt;

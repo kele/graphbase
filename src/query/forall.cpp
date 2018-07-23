@@ -20,10 +20,10 @@ Value ForAll::eval(std::shared_ptr<const Environment> env) const {
       throw std::logic_error("Cannot evaluate expression to true/false.");
     }
     if (!result.value()) {
-      return Value::from<bool>(false);
+      return Value::of<bool>(false);
     }
   }
-  return Value::from<bool>(true);
+  return Value::of<bool>(true);
 }
 
 ForAll::ForAll(std::shared_ptr<const QuantifierBind> bind,
