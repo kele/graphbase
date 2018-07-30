@@ -23,7 +23,7 @@ Environment::try_get(const std::string &name) const {
   return std::nullopt;
 }
 
-const Value& Environment::get(const std::string &name) const {
+const Value &Environment::get(const std::string &name) const {
   return m_binding.at(name);
 }
 

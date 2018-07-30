@@ -19,13 +19,12 @@ public:
   std::optional<std::reference_wrapper<const Value>>
   try_get(const std::string &name) const;
 
-  const Value& get(const std::string &name) const;
+  const Value &get(const std::string &name) const;
 
   void add(const std::string &name, Value value);
 
 private:
   std::map<std::string, const Value> m_binding;
-
 };
 
 } // namespace query

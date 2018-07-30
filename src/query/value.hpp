@@ -2,11 +2,11 @@
 
 #include "patterns/istream.hpp"
 
+#include <memory>
 #include <optional>
 #include <stdexcept>
 #include <type_traits>
 #include <variant>
-#include <memory>
 #include <vector>
 
 namespace query {
@@ -36,9 +36,7 @@ public:
 
   template <class T> static Value of(T v) { return Value(variant(v)); }
 
-  template <class T> const T& get() const {
-    return std::get<T>(m_value);
-  }
+  template <class T> const T &get() const { return std::get<T>(m_value); }
 
   template <class T> std::optional<T> try_get() const {
     return holds<T>() ? std::make_optional(std::get<T>(m_value)) : std::nullopt;
