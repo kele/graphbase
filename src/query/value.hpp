@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <type_traits>
 #include <variant>
+#include <memory>
 #include <vector>
 
 namespace query {
