@@ -12,22 +12,19 @@ TEST_CASE("Simple environment", "[environment]") {
   });;
 
   auto a = env.get("a");
-  REQUIRE(a.has_value());
+  REQUIRE(a);
   auto a_v = a.value().get().get<Integer>();
-  REQUIRE(a_v.has_value());
-  REQUIRE(*a_v == 10);
+  REQUIRE(a_v == 10);
 
   auto b = env.get("b");
-  REQUIRE(b.has_value());
+  REQUIRE(b);
   auto b_v = b.value().get().get<Integer>();
-  REQUIRE(b_v.has_value());
-  REQUIRE(*b_v == 7);
+  REQUIRE(b_v == 7);
 
   auto c = env.get("c");
-  REQUIRE(c.has_value());
+  REQUIRE(c);
   auto c_v = c.value().get().get<Integer>();
-  REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == 12345678);
+  REQUIRE(c_v == 12345678);
 }
 
 TEST_CASE("Add variable to environment", "[environment]") {
@@ -39,22 +36,19 @@ TEST_CASE("Add variable to environment", "[environment]") {
   env.add("b", Value::of<Integer>(7));
 
   auto a = env.get("a");
-  REQUIRE(a.has_value());
+  REQUIRE(a);
   auto a_v = a.value().get().get<Integer>();
-  REQUIRE(a_v.has_value());
-  REQUIRE(*a_v == 10);
+  REQUIRE(a_v == 10);
 
   auto b = env.get("b");
-  REQUIRE(b.has_value());
+  REQUIRE(b);
   auto b_v = b.value().get().get<Integer>();
-  REQUIRE(b_v.has_value());
-  REQUIRE(*b_v == 7);
+  REQUIRE(b_v == 7);
 
   auto c = env.get("c");
-  REQUIRE(c.has_value());
+  REQUIRE(c);
   auto c_v = c.value().get().get<Integer>();
-  REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == 12345678);
+  REQUIRE(c_v == 12345678);
 }
 
 TEST_CASE("Add shadowing variable to environment", "[environment]") {
@@ -66,16 +60,14 @@ TEST_CASE("Add shadowing variable to environment", "[environment]") {
   env.add("c", Value::of<Integer>(9876));
 
   auto a = env.get("a");
-  REQUIRE(a.has_value());
+  REQUIRE(a);
   auto a_v = a.value().get().get<Integer>();
-  REQUIRE(a_v.has_value());
-  REQUIRE(*a_v == 10);
+  REQUIRE(a_v == 10);
 
   auto c = env.get("c");
-  REQUIRE(c.has_value());
+  REQUIRE(c);
   auto c_v = c.value().get().get<Integer>();
-  REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == 9876);
+  REQUIRE(c_v == 9876);
 }
 
 TEST_CASE("Simple environment extension", "[environment]") {
@@ -87,22 +79,19 @@ TEST_CASE("Simple environment extension", "[environment]") {
   Environment extended(env, Binding{{"b", Value::of<Integer>(7)}});
 
   auto a = extended.get("a");
-  REQUIRE(a.has_value());
+  REQUIRE(a);
   auto a_v = a.value().get().get<Integer>();
-  REQUIRE(a_v.has_value());
-  REQUIRE(*a_v == 10);
+  REQUIRE(a_v == 10);
 
   auto b = extended.get("b");
-  REQUIRE(b.has_value());
+  REQUIRE(b);
   auto b_v = b.value().get().get<Integer>();
-  REQUIRE(b_v.has_value());
-  REQUIRE(*b_v == 7);
+  REQUIRE(b_v == 7);
 
   auto c = extended.get("c");
-  REQUIRE(c.has_value());
+  REQUIRE(c);
   auto c_v = c.value().get().get<Integer>();
-  REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == 12345678);
+  REQUIRE(c_v == 12345678);
 }
 
 TEST_CASE("Shadowing environment extension", "[environment]") {
@@ -114,14 +103,12 @@ TEST_CASE("Shadowing environment extension", "[environment]") {
   Environment extended(env, Binding{{"c", Value::of<Integer>(9876)}});
 
   auto a = extended.get("a");
-  REQUIRE(a.has_value());
+  REQUIRE(a);
   auto a_v = a.value().get().get<Integer>();
-  REQUIRE(a_v.has_value());
-  REQUIRE(*a_v == 10);
+  REQUIRE(a_v == 10);
 
   auto c = extended.get("c");
-  REQUIRE(c.has_value());
+  REQUIRE(c);
   auto c_v = c.value().get().get<Integer>();
-  REQUIRE(c_v.has_value());
-  REQUIRE(*c_v == 9876);
+  REQUIRE(c_v == 9876);
 }

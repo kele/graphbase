@@ -35,7 +35,11 @@ public:
 
   template <class T> static Value of(T v) { return Value(variant(v)); }
 
-  template <class T> std::optional<T> get() const {
+  template <class T> const T& get() const {
+    return std::get<T>(m_value);
+  }
+
+  template <class T> std::optional<T> try_get() const {
     return holds<T>() ? std::make_optional(std::get<T>(m_value)) : std::nullopt;
   }
 

@@ -16,6 +16,7 @@ public:
   explicit Environment(Binding &&b);
   Environment(const Environment &base, const Binding &b);
 
+  // TODO: add try_get and change this to throw an exception
   std::optional<std::reference_wrapper<const Value>>
   get(const std::string &name) const;
 
