@@ -8,9 +8,9 @@
 namespace query {
 
 Value ForAll::eval(std::shared_ptr<const Environment> env) const {
-  auto gen = m_bind->iterate(env);
+  auto stream = m_bind->iterate(env);
   while (true) {
-    auto opt_b = gen->next();
+    auto opt_b = stream->next();
     if (not opt_b.has_value()) {
       break;
     }
