@@ -3,11 +3,11 @@
 
 namespace query {
 
-Environment::Environment(const Binding &b) : m_binding{b} {}
+Environment::Environment(const std::map<std::string, const Value> &b) : m_binding{b} {}
 
-Environment::Environment(Binding &&b) : m_binding{std::move(b)} {}
+Environment::Environment(std::map<std::string, const Value> &&b) : m_binding{std::move(b)} {}
 
-Environment::Environment(const Environment &env, const Binding &b)
+Environment::Environment(const Environment &env, const std::map<std::string, const Value> &b)
     : Environment(env) {
   for (const auto &kv : b) {
     this->add(kv.first, kv.second);

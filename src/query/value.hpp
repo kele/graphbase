@@ -7,6 +7,7 @@
 #include <type_traits>
 #include <variant>
 #include <vector>
+#include <memory>
 
 namespace query {
 

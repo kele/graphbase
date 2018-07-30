@@ -1,9 +1,9 @@
 #pragma once
 
-#include "query/binding.hpp"
+#include "query/value.hpp"
 
-#include <deque>
 #include <functional>
+#include <map>
 #include <optional>
 
 namespace query {
@@ -12,9 +12,9 @@ class Environment {
 public:
   Environment() = default;
 
-  explicit Environment(const Binding &b);
-  explicit Environment(Binding &&b);
-  Environment(const Environment &base, const Binding &b);
+  explicit Environment(const std::map<std::string, const Value> &b);
+  explicit Environment(std::map<std::string, const Value> &&b);
+  Environment(const Environment &base, const std::map<std::string, const Value> &b);
 
   std::optional<std::reference_wrapper<const Value>>
   get(const std::string &name) const;
@@ -22,7 +22,7 @@ public:
   void add(const std::string &name, Value value);
 
 private:
-  Binding m_binding;
+  std::map<std::string, const Value> m_binding;
 };
 
 } // namespace query
