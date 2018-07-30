@@ -64,17 +64,11 @@ file(GLOB ALGO_HDRS
     ${CMAKE_CURRENT_SOURCE_DIR}/graph/graph/*.hpp
 )
 
-file(GLOB QUERY_SRCS
+file(GLOB_RECURSE QUERY_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/query/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/query/conversions/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/query/value/*.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/query/value/builtin/*.cpp
 )
-file(GLOB QUERY_HDRS
+file(GLOB_RECURSE QUERY_HDRS
     ${CMAKE_CURRENT_SOURCE_DIR}/query/*.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/query/conversions/*.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/query/value/*.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/query/value/builtin/*.hpp
 )
 
 file(GLOB CONVERSIONS_SRCS
