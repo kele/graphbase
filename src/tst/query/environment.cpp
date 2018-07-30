@@ -5,7 +5,7 @@
 using namespace query;
 
 TEST_CASE("Simple environment", "[environment]") {
-  Environment env(std::map<std::string, const Value>{
+  Environment env(Binding{
       {"a", Value::of<Integer>(10)},
       {"b", Value::of<Integer>(7)},
       {"c", Value::of<Integer>(12345678)}
@@ -31,7 +31,7 @@ TEST_CASE("Simple environment", "[environment]") {
 }
 
 TEST_CASE("Add variable to environment", "[environment]") {
-  Environment env(std::map<std::string, const Value>{
+  Environment env(Binding{
       {"a", Value::of<Integer>(10)},
       {"c", Value::of<Integer>(12345678)}
   });;
@@ -58,7 +58,7 @@ TEST_CASE("Add variable to environment", "[environment]") {
 }
 
 TEST_CASE("Add shadowing variable to environment", "[environment]") {
-  Environment env(std::map<std::string, const Value>{
+  Environment env(Binding{
       {"a", Value::of<Integer>(10)},
       {"c", Value::of<Integer>(12345678)}
   });;
@@ -79,12 +79,12 @@ TEST_CASE("Add shadowing variable to environment", "[environment]") {
 }
 
 TEST_CASE("Simple environment extension", "[environment]") {
-  Environment env(std::map<std::string, const Value>{
+  Environment env(Binding{
       {"a", Value::of<Integer>(10)},
       {"c", Value::of<Integer>(12345678)}
   });;
 
-  Environment extended(env, std::map<std::string, const Value>{{"b", Value::of<Integer>(7)}});
+  Environment extended(env, Binding{{"b", Value::of<Integer>(7)}});
 
   auto a = extended.get("a");
   REQUIRE(a.has_value());
@@ -106,12 +106,12 @@ TEST_CASE("Simple environment extension", "[environment]") {
 }
 
 TEST_CASE("Shadowing environment extension", "[environment]") {
-  Environment env(std::map<std::string, const Value>{
+  Environment env(Binding{
       {"a", Value::of<Integer>(10)},
       {"c", Value::of<Integer>(12345678)}
   });;
 
-  Environment extended(env, std::map<std::string, const Value>{{"c", Value::of<Integer>(9876)}});
+  Environment extended(env, Binding{{"c", Value::of<Integer>(9876)}});
 
   auto a = extended.get("a");
   REQUIRE(a.has_value());

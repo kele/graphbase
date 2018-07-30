@@ -1,7 +1,5 @@
 #pragma once
 
-#include <optional>
-
 namespace patterns {
 
 template<class T>
