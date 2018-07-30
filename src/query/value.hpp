@@ -12,19 +12,19 @@
 namespace query {
 
 class Value;
+
 using Boolean = bool;
 
 struct Integer {
-  Integer(int v) : value(v) {}
+  Integer(int v);
+  operator int() const;
+
   int value;
-  operator int() const { return value; }
 };
 
 class Stream : public patterns::IStream<std::unique_ptr<Value>> {
 public:
-  std::optional<std::unique_ptr<Value>> next() final {
-    throw std::logic_error("Value::Stream::next() not implemented.");
-  }
+  std::optional<std::unique_ptr<Value>> next() final;
 };
 
 // TODO: get rid of vector
