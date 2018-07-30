@@ -26,6 +26,9 @@ private:
   class BindingStream : public patterns::IStream<const Binding> {
   public:
     BindingStream(std::string name, std::vector<value::Value> values);
+
+    std::unique_ptr<patterns::IStream<const Binding>> clone() const;
+
     std::optional<const Binding> next() final;
 
   private:

@@ -12,6 +12,8 @@ class Value;
 class Stream : public patterns::IStream<std::unique_ptr<Value>> {
 public:
   std::optional<std::unique_ptr<Value>> next() final;
+
+  std::unique_ptr<patterns::IStream<std::unique_ptr<Value>>> clone() const;
 };
 
 } // namespace value

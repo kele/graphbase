@@ -23,6 +23,10 @@ QuantifierBind::BindingStream::BindingStream(std::string name,
                                              std::vector<Value> values)
     : m_name(name), m_values(std::move(values)) {}
 
+std::unique_ptr<patterns::IStream<const Binding>> QuantifierBind::BindingStream::clone() const {
+  return std::make_unique<BindingStream>(*this);
+}
+
 std::optional<const Binding> QuantifierBind::BindingStream::next() {
   if (m_next >= m_values.size()) {
     return std::nullopt;
