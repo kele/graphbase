@@ -1,12 +1,11 @@
-#include "query/value.hpp"
+#include "query/value/stream.hpp"
 
 namespace query {
-
-Integer::Integer(int v) : value(v) {}
-Integer::operator int() const { return value; }
+namespace value {
 
 std::optional<std::unique_ptr<Value>> Stream::next() {
   throw std::logic_error("Value::Stream::next() not implemented.");
 }
 
+} // namespace value
 } // namespace query

@@ -5,7 +5,7 @@
 #include "query/binding.hpp"
 #include "query/iexpression.hpp"
 #include "query/list.hpp"
-#include "query/value.hpp"
+#include "query/value/value.hpp"
 
 #include <memory>
 #include <optional>
@@ -25,13 +25,13 @@ private:
 
   class BindingStream : public patterns::IStream<const Binding> {
   public:
-    BindingStream(std::string name, std::vector<Value> vlues);
+    BindingStream(std::string name, std::vector<value::Value> values);
     std::optional<const Binding> next() final;
 
   private:
     int m_next = 0;
     const std::string m_name;
-    const std::vector<Value> m_values;
+    const std::vector<value::Value> m_values;
   };
 
   std::string m_name;

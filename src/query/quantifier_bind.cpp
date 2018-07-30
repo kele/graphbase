@@ -3,9 +3,10 @@
 #include "query/conversions/conversions.hpp"
 #include "query/evaluate.hpp"
 #include "query/iexpression.hpp"
-#include "query/value.hpp"
 
 namespace query {
+
+using value::Value;
 
 QuantifierBind::QuantifierBind(std::string name,
                                std::shared_ptr<const IExpression> domain)

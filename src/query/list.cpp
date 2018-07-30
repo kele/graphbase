@@ -2,6 +2,8 @@
 
 namespace query {
 
+using value::Value;
+
 Value List::eval(std::shared_ptr<const Environment> env) const {
   std::vector<Value> vs;
   for (const auto &e : m_elements) {

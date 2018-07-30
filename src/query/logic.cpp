@@ -4,6 +4,8 @@
 
 namespace query {
 
+using value::Value;
+
 // True
 Value True::eval(std::shared_ptr<const Environment>) const {
   return Value::of<bool>(true);

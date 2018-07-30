@@ -67,10 +67,12 @@ file(GLOB ALGO_HDRS
 file(GLOB QUERY_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/query/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/query/conversions/*.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/query/value/*.cpp
 )
 file(GLOB QUERY_HDRS
     ${CMAKE_CURRENT_SOURCE_DIR}/query/*.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/query/conversions/*.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/query/value/*.hpp
 )
 
 file(GLOB CONVERSIONS_SRCS

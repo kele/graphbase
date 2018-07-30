@@ -16,15 +16,15 @@ public:
   explicit Environment(Binding &&b);
   Environment(const Environment &base, const Binding &b);
 
-  std::optional<std::reference_wrapper<const Value>>
+  std::optional<std::reference_wrapper<const value::Value>>
   try_get(const std::string &name) const;
 
-  const Value &get(const std::string &name) const;
+  const value::Value &get(const std::string &name) const;
 
-  void add(const std::string &name, Value value);
+  void add(const std::string &name, value::Value value);
 
 private:
-  std::map<std::string, const Value> m_binding;
+  std::map<std::string, const value::Value> m_binding;
 };
 
 } // namespace query

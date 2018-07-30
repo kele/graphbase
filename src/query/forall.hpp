@@ -12,7 +12,7 @@ public:
   ForAll(std::shared_ptr<const QuantifierBind> bind,
          std::shared_ptr<const IExpression> expr);
 
-  Value eval(std::shared_ptr<const Environment> env) const final;
+  value::Value eval(std::shared_ptr<const Environment> env) const final;
 
 private:
   ForAll() = delete;

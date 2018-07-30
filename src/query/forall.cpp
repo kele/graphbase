@@ -7,6 +7,8 @@
 
 namespace query {
 
+using value::Value;
+
 Value ForAll::eval(std::shared_ptr<const Environment> env) const {
   auto stream = m_bind->iterate(env);
   while (true) {

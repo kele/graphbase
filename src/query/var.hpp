@@ -2,7 +2,7 @@
 
 #include "estd/estd.hpp"
 #include "query/iexpression.hpp"
-#include "query/value.hpp"
+#include "query/value/value.hpp"
 
 #include <memory>
 #include <optional>
@@ -13,7 +13,7 @@ class Var : public IExpression, public estd::shared<Var> {
 public:
   explicit Var(std::string name);
 
-  Value eval(std::shared_ptr<const Environment> env) const final;
+  value::Value eval(std::shared_ptr<const Environment> env) const final;
 
 protected:
 private:

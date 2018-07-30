@@ -2,6 +2,7 @@
 
 #include "estd/estd.hpp"
 #include "query/iexpression.hpp"
+#include "query/value/value.hpp"
 
 #include <memory>
 #include <vector>
@@ -16,7 +17,7 @@ public:
     return m_elements;
   }
 
-  Value eval(std::shared_ptr<const Environment> env) const final;
+  value::Value eval(std::shared_ptr<const Environment> env) const final;
 
   explicit List(
       std::initializer_list<std::shared_ptr<const IExpression>> elements)

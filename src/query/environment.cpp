@@ -3,6 +3,8 @@
 
 namespace query {
 
+using value::Value;
+
 Environment::Environment(const Binding &b) : m_binding{b} {}
 
 Environment::Environment(Binding &&b) : m_binding{std::move(b)} {}

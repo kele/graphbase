@@ -1,8 +1,10 @@
 #pragma once
 
-#include "patterns/istream.hpp"
+#include "query/value/boolean.hpp"
+#include "query/value/integer.hpp"
+#include "query/value/stream.hpp"
+#include "query/value/vector.hpp"
 
-#include <memory>
 #include <optional>
 #include <stdexcept>
 #include <type_traits>
@@ -11,24 +13,7 @@
 
 namespace query {
 
-class Value;
-
-using Boolean = bool;
-
-struct Integer {
-  Integer(int v);
-  operator int() const;
-
-  int value;
-};
-
-class Stream : public patterns::IStream<std::unique_ptr<Value>> {
-public:
-  std::optional<std::unique_ptr<Value>> next() final;
-};
-
-// TODO: get rid of vector
-using Vector = std::vector<Value>;
+namespace value {
 
 class Value {
 public:
@@ -55,5 +40,7 @@ private:
 
   variant m_value;
 };
+
+} // namespace value
 
 } // namespace query

@@ -2,7 +2,8 @@
 
 #include "query/environment.hpp"
 
-using namespace query;
+using namespace ::query;
+using namespace ::query::value;
 
 TEST_CASE("Simple environment", "[environment]") {
   Environment env(Binding{
