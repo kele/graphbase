@@ -16,14 +16,16 @@ public:
   explicit Environment(Binding &&b);
   Environment(const Environment &base, const Binding &b);
 
-  // TODO: add try_get and change this to throw an exception
   std::optional<std::reference_wrapper<const Value>>
-  get(const std::string &name) const;
+  try_get(const std::string &name) const;
+
+  const Value& get(const std::string &name) const;
 
   void add(const std::string &name, Value value);
 
 private:
-  Binding m_binding;
+  std::map<std::string, const Value> m_binding;
+
 };
 
 } // namespace query

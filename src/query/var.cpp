@@ -7,7 +7,7 @@ namespace query {
 Var::Var(std::string name) : m_name(std::move(name)) {}
 
 Value Var::eval(std::shared_ptr<const Environment> env) const {
-  return env->get(m_name).value();
+  return env->get(m_name);
 }
 
 } // namespace query

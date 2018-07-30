@@ -15,12 +15,16 @@ Environment::Environment(const Environment &env, const Binding &b)
 }
 
 std::optional<std::reference_wrapper<const Value>>
-Environment::get(const std::string &name) const {
+Environment::try_get(const std::string &name) const {
   auto it = m_binding.find(name);
   if (it != m_binding.end()) {
     return it->second;
   }
   return std::nullopt;
+}
+
+const Value& Environment::get(const std::string &name) const {
+  return m_binding.at(name);
 }
 
 void Environment::add(const std::string &name, Value value) {
