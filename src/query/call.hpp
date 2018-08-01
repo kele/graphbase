@@ -44,9 +44,6 @@ public:
   explicit Call(const std::vector<std::shared_ptr<const IExpression>> &args) : m_args(args) {}
 
   value::Value eval(std::shared_ptr<const Environment> env) const final {
-    // TODO: implement this properly
-    // I need to create a tuple in compile time! Or, create a function that
-    // creates a tuple in compile time.
     auto t = create_tuple<Args, std::tuple_size<Args>::value>(m_args, env);
     return m_f.call(t);
   }
