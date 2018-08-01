@@ -1,6 +1,7 @@
 #pragma once
 
 #include "query/value/boolean.hpp"
+#include "query/value/graph.hpp"
 #include "query/value/integer.hpp"
 #include "query/value/stream.hpp"
 #include "query/value/vector.hpp"
@@ -12,12 +13,11 @@
 #include <vector>
 
 namespace query {
-
 namespace value {
 
 class Value {
 public:
-  using variant = std::variant<Boolean, Integer, Stream, Vector>;
+  using variant = std::variant<Boolean, Integer, Stream, Vector, Graph>;
 
   template <class T> static Value of(T v) { return Value(variant(v)); }
 
@@ -42,5 +42,4 @@ private:
 };
 
 } // namespace value
-
 } // namespace query

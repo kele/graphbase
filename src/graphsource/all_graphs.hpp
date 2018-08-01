@@ -9,6 +9,7 @@ namespace graphbase {
 namespace undirected {
 
 // IncrementableBigNum is a bignum that starts at zero and can be incremented.
+// TODO(kele): move it somewhere else
 class IncrementableBigNum {
 public:
   // Creates a bignum of `n` bits size.
