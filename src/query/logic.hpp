@@ -9,15 +9,6 @@
 
 namespace query {
 
-class True : public IExpression, public estd::shared<True> {
-public:
-  value::Value eval(std::shared_ptr<const Environment> env) const final;
-};
-
-class False : public IExpression, public estd::shared<False> {
-public:
-  value::Value eval(std::shared_ptr<const Environment> env) const final;
-};
 
 class Not : public IExpression, public estd::shared<Not> {
 public:

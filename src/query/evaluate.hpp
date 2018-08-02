@@ -1,6 +1,7 @@
 #pragma once
 
 #include "query/conversions/conversions.hpp"
+#include "estd/type_traits.hpp"
 #include "query/environment.hpp"
 #include "query/iexpression.hpp"
 
@@ -27,10 +28,9 @@ auto eval_wrapper(const std::vector<std::shared_ptr<const IExpression>> &exprs,
 }
 
 template <class Args, size_t... Is>
-auto create_tuple(
-    std::shared_ptr<const Environment> env,
-    const std::vector<std::shared_ptr<const IExpression>> &exprs,
-    std::index_sequence<Is...>) {
+auto create_tuple(std::shared_ptr<const Environment> env,
+                  const std::vector<std::shared_ptr<const IExpression>> &exprs,
+                  std::index_sequence<Is...>) {
   return std::make_tuple(eval_wrapper<Is, Args>(exprs, env)...);
 }
 } // anonymous namespace
@@ -44,10 +44,11 @@ std::optional<T> evaluate(std::shared_ptr<const Environment> env,
   return conversions::to<T>(expr.eval(env));
 }
 
-template <class Args, size_t N>
+template <class Args>
 auto evaluate(std::shared_ptr<const Environment> env,
               const std::vector<std::shared_ptr<const IExpression>> &exprs) {
-  return create_tuple<Args>(env, exprs, std::make_index_sequence<N>());
+  static_assert(estd::is_tuple<Args>::value, "Args has to be a tuple.");
+  return create_tuple<Args>(env, exprs, std::make_index_sequence<std::tuple_size<Args>::value>());
 }
 
 } // namespace query

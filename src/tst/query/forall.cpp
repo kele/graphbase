@@ -3,18 +3,20 @@
 #include "query/evaluate.hpp"
 #include "query/forall.hpp"
 #include "query/list.hpp"
-#include "query/var.hpp"
+#include "query/literals/literals.hpp"
 #include "query/logic.hpp"
+#include "query/var.hpp"
 
 using namespace query;
+using literals::Boolean;
 
 using Vec = std::vector<std::shared_ptr<const IExpression>>;
 
 TEST_CASE("ForAll({'a': {False}}, True) == true", "[forall]") {
   auto env = std::make_shared<Environment>();
   auto e = ForAll::build(
-      QuantifierBind::build(std::string("a"), List::build(Vec{False::build()})),
-      True::build());
+      QuantifierBind::build(std::string("a"), List::build(Vec{Boolean::build(false)})),
+      Boolean::build(true));
 
   REQUIRE(evaluate<bool>(env, *e).value());
 }
@@ -23,10 +25,10 @@ TEST_CASE("ForAll({'a': {True, True}}, 'a') == true", "[forall]") {
   auto env = std::make_shared<Environment>();
   auto e = ForAll::build(
       QuantifierBind::build(std::string("a"), List::build(Vec{
-          True::build(),
-          True::build()
+          Boolean::build(true),
+          Boolean::build(true)
           })),
-      True::build());
+      Boolean::build(true));
 
   REQUIRE(evaluate<bool>(env, *e).value());
 }
@@ -35,8 +37,8 @@ TEST_CASE("ForAll({'a': {True, False}}, 'a') == false", "[forall]") {
   auto env = std::make_shared<Environment>();
   auto e = ForAll::build(
       QuantifierBind::build(std::string("a"), List::build(Vec{
-          True::build(),
-          False::build()
+          Boolean::build(true),
+          Boolean::build(false)
           })),
       Var::build("a"));
 
@@ -48,11 +50,11 @@ TEST_CASE("ForAll environment extension (ForAll(a in {True, False}, ForAll(b in 
   auto e = ForAll::build(
       QuantifierBind::build(
         std::string("a"),
-        List::build(Vec{True::build(), False::build()})),
+        List::build(Vec{Boolean::build(true), Boolean::build(false)})),
       ForAll::build(
         QuantifierBind::build(
           std::string("b"),
-          List::build(Vec{True::build(), True::build()})),
+          List::build(Vec{Boolean::build(true), Boolean::build(true)})),
         Var::build("a"))
       );
 
@@ -64,11 +66,11 @@ TEST_CASE("ForAll environment extension (ForAll(a in {True, False}, ForAll(b in 
   auto e = ForAll::build(
       QuantifierBind::build(
         std::string("a"),
-        List::build(Vec{True::build(), False::build()})),
+        List::build(Vec{Boolean::build(true), Boolean::build(false)})),
       ForAll::build(
         QuantifierBind::build(
           std::string("b"),
-          List::build(Vec{True::build(), True::build()})),
+          List::build(Vec{Boolean::build(true), Boolean::build(true)})),
         Var::build("b"))
       );
 
@@ -80,11 +82,11 @@ TEST_CASE("ForAll environment shadowing (ForAll(a in {True, False}, ForAll(a in 
   auto e = ForAll::build(
       QuantifierBind::build(
         std::string("a"),
-        List::build(Vec{True::build(), False::build()})),
+        List::build(Vec{Boolean::build(true), Boolean::build(false)})),
       ForAll::build(
         QuantifierBind::build(
           std::string("a"),
-          List::build(Vec{True::build(), True::build()})),
+          List::build(Vec{Boolean::build(true), Boolean::build(true)})),
         Var::build("a"))
       );
 
