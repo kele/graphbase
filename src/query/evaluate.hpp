@@ -12,8 +12,42 @@ namespace query {
 
 template <class T>
 std::optional<T> evaluate(std::shared_ptr<const Environment> env,
+                          const IExpression &expr);
+} // namespace query
+
+namespace {
+
+using namespace query;
+
+template <size_t Index, class ArgsTuple>
+auto eval_wrapper(const std::vector<std::shared_ptr<const IExpression>> &exprs,
+                  std::shared_ptr<const Environment> env) {
+  return *evaluate<typename std::tuple_element<Index, ArgsTuple>::type>(
+      env, *exprs[Index]);
+}
+
+template <class Args, size_t... Is>
+auto create_tuple(
+    std::shared_ptr<const Environment> env,
+    const std::vector<std::shared_ptr<const IExpression>> &exprs,
+    std::index_sequence<Is...>) {
+  return std::make_tuple(eval_wrapper<Is, Args>(exprs, env)...);
+}
+} // anonymous namespace
+
+namespace query {
+
+// TODO: get rid of the optional return value
+template <class T>
+std::optional<T> evaluate(std::shared_ptr<const Environment> env,
                           const IExpression &expr) {
   return conversions::to<T>(expr.eval(env));
+}
+
+template <class Args, size_t N>
+auto evaluate(std::shared_ptr<const Environment> env,
+              const std::vector<std::shared_ptr<const IExpression>> &exprs) {
+  return create_tuple<Args>(env, exprs, std::make_index_sequence<N>());
 }
 
 } // namespace query
