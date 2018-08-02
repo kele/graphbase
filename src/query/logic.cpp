@@ -10,7 +10,8 @@ using value::Value;
 Not::Not(std::shared_ptr<const IExpression> expr) : m_expr(std::move(expr)) {}
 
 Value Not::eval(std::shared_ptr<const Environment> env) const {
-  return Value::of<value::Boolean>(!evaluate<value::Boolean>(env, *m_expr).value());
+  return Value::of<value::Boolean>(
+      !evaluate<value::Boolean>(env, *m_expr).value());
 }
 
 } // namespace query

@@ -9,7 +9,6 @@
 
 namespace query {
 
-
 class Not : public IExpression, public estd::shared<Not> {
 public:
   explicit Not(std::shared_ptr<const IExpression> expr);

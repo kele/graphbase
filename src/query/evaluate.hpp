@@ -1,7 +1,7 @@
 #pragma once
 
-#include "query/conversions/conversions.hpp"
 #include "estd/type_traits.hpp"
+#include "query/conversions/conversions.hpp"
 #include "query/environment.hpp"
 #include "query/iexpression.hpp"
 
@@ -48,7 +48,8 @@ template <class Args>
 auto evaluate(std::shared_ptr<const Environment> env,
               const std::vector<std::shared_ptr<const IExpression>> &exprs) {
   static_assert(estd::is_tuple<Args>::value, "Args has to be a tuple.");
-  return create_tuple<Args>(env, exprs, std::make_index_sequence<std::tuple_size<Args>::value>());
+  return create_tuple<Args>(
+      env, exprs, std::make_index_sequence<std::tuple_size<Args>::value>());
 }
 
 } // namespace query
