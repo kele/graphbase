@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
 
     std::cout << "#############################################" << std::endl;
     std::cout << "# Response for request " << i << std::endl;
-    auto status = client.PrintGraphs(request);
+    auto status = client.PrintGraphs(&std::cout, request);
     if (!status.ok()) {
       std::cout << "Error: " << status.error_message() << " - "
                 << status.error_details() << std::endl;
