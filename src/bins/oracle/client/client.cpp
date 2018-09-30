@@ -16,7 +16,8 @@ using oracle::Oracle;
 OracleClient::OracleClient(std::shared_ptr<grpc::Channel> channel)
     : m_stub(Oracle::NewStub(channel)) {}
 
-grpc::Status OracleClient::PrintGraphs(std::ostream *os, const ListGraphsRequest &request) {
+grpc::Status OracleClient::PrintGraphs(std::ostream *os,
+                                       const ListGraphsRequest &request) {
   grpc::ClientContext ctx;
 
   ListGraphsResponse resp;

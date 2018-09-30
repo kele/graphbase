@@ -7,13 +7,43 @@ service Oracle {
 }
 
 message ListGraphsRequest {
-    //Domain domain = 1;
-    //Predicate predicate = 2;
-    string page_token = 3;
-    uint64 max_page_size = 4;
+    Expression expr = 1;
+    string page_token = 2;
+    uint64 max_page_size = 3;
 }
 
 message ListGraphsResponse {
     //repeated Graph graphs = 1;
     string next_page_token = 2;
+}
+
+message Expression {
+  oneof expr {
+    ForAll forall = 1;
+    IntegerLiteral int_literal = 2;
+    BooleanLiteral bool_literal = 3;
+    List list = 4;
+  }
+}
+
+message ForAll {
+  string var_name = 1;
+  Expression bind = 2;
+  Expression expr = 3;
+}
+
+message IntegerLiteral {
+  int64 integer = 1;
+}
+
+message BooleanLiteral {
+  bool boolean = 2;
+}
+
+message Var {
+  string name = 1;
+}
+
+message List {
+  repeated Expression elements = 1;
 }

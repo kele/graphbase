@@ -10,14 +10,14 @@ namespace query {
 using value::Value;
 
 Value ForAll::eval(std::shared_ptr<const Environment> env) const {
-  auto stream = m_bind->iterate(env);
+  auto stream = bind->iterate(env);
   while (true) {
     auto opt_b = stream->next();
     if (not opt_b.has_value()) {
       break;
     }
     auto result =
-        evaluate<bool>(std::make_shared<Environment>(*env, *opt_b), *m_expr);
+        evaluate<bool>(std::make_shared<Environment>(*env, *opt_b), *expr);
     if (!result.has_value()) {
       throw std::logic_error("Cannot evaluate expression to true/false.");
     }
@@ -30,6 +30,6 @@ Value ForAll::eval(std::shared_ptr<const Environment> env) const {
 
 ForAll::ForAll(std::shared_ptr<const QuantifierBind> bind,
                std::shared_ptr<const IExpression> expr)
-    : m_bind(std::move(bind)), m_expr(std::move(expr)) {}
+    : bind(std::move(bind)), expr(std::move(expr)) {}
 
 } // namespace query

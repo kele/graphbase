@@ -14,11 +14,11 @@ public:
 
   value::Value eval(std::shared_ptr<const Environment> env) const final;
 
+  const std::shared_ptr<const QuantifierBind> bind;
+  const std::shared_ptr<const IExpression> expr;
+
 private:
   ForAll() = delete;
-
-  std::shared_ptr<const QuantifierBind> m_bind;
-  std::shared_ptr<const IExpression> m_expr;
 };
 
 } // namespace query
