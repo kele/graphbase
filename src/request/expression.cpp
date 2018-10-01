@@ -1,16 +1,10 @@
-#include "request/list_graphs.hpp"
+#include "request/expression.hpp"
+#include "request/forall.hpp"
 
 #include "query/query.hpp"
 
 namespace graphbase {
 namespace request {
-
-std::shared_ptr<const query::ForAll> for_all(const oracle::ForAll &fapb) {
-  auto bind_expr = expression(fapb.bind());
-  auto qb = query::QuantifierBind::build(fapb.var_name(), bind_expr);
-  auto expr = expression(fapb.expr());
-  return query::ForAll::build(qb, expr);
-}
 
 // TODO(kele): test ForAll
 std::shared_ptr<const query::IExpression>
