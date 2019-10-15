@@ -13,7 +13,7 @@ int main() {
   server_builder.AddListeningPort("0.0.0.0:51000",
                                   grpc::InsecureServerCredentials());
 
-  OracleServer oracle_server(std::make_unique<Oracle>());
+    OracleServer oracle_server(std::make_unique<Oracle>(nullptr /* TODO */));
   server_builder.RegisterService(&oracle_server);
   try {
     auto server = server_builder.BuildAndStart();

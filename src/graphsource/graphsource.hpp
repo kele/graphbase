@@ -44,6 +44,7 @@ public:
   virtual estd::generator<VariantGraph> Graphs() const = 0;
   virtual Kind SourceKind() const = 0;
   virtual GraphType SourceGraphType() const = 0;
+  virtual ~GraphSource() = 0;
 };
 
 } // namespace graphsource

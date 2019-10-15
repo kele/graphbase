@@ -19,9 +19,14 @@ using graphbase::graphsource::Kind;
 
 class Oracle {
 public:
+  Oracle(std::unique_ptr<std::map<Kind, std::shared_ptr<GraphSource>>> sources) : m_sources(std::move(sources)) {}
+
   estd::generator<std::shared_ptr<const BasicGraph>>
   GetUndirectedGraphs(Kind source_kind,
                       std::shared_ptr<const Predicate> p) const;
+
+protected:
+  std::unique_ptr<std::map<Kind, std::shared_ptr<GraphSource>>> m_sources;
 };
 
 } // namespace graphbase

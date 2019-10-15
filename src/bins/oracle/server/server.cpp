@@ -10,8 +10,8 @@
 #include "oracle/oracle.hpp"
 #include "protos/sv_oracle.grpc.pb.h"
 
-using namespace grpc;
 using namespace graphbase;
+using namespace graphbase::graph::undirected;
 
 ////////////////////////////////////////////////////////////////////////////////
 // OracleServer implementation
@@ -23,7 +23,12 @@ grpc::Status
 OracleServer::ListGraphs(grpc::ServerContext *context,
                          const oracle::ListGraphsRequest *request,
                          oracle::ListGraphsResponse *response) try {
-  throw std::runtime_error("Not implemented.");
+
+
+  auto graphs = m_oracle->GetUndirectedGraphs(Kind::All, std::make_shared<predicates::IsBipartite>());
+
+  return grpc::Status();
+
 } catch (const std::exception &e) {
-  return Status(StatusCode::INTERNAL, e.what());
+  return grpc::Status(grpc::StatusCode::INTERNAL, e.what());
 }
