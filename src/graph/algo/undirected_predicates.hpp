@@ -3,16 +3,14 @@
 #include "graph/algo/predicates.hpp"
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 namespace predicates {
 
-class IsBipartite : public graphbase::graph::predicates::Predicate {
+class IsBipartite : public graphbase::predicates::Predicate<BasicGraph> {
 public:
-  bool Test(const graphbase::graphsource::VariantGraph &vg) const override;
+  bool Test(const BasicGraph &g) const override;
 };
 
 } // namespace predicates
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase

@@ -6,7 +6,6 @@
 #include "graph/common/common.hpp"
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 
 // AdjacentEdges is a vector for edges adjacent to a vertex.
@@ -75,5 +74,4 @@ private:
 };
 
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase

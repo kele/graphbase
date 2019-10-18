@@ -5,11 +5,11 @@
 namespace graphbase {
 namespace conversions {
 
-std::string ToGraph6(const graph::undirected::BasicGraph &g) {
+std::string ToGraph6(const undirected::BasicGraph &g) {
   // TODO: this is not actually graph6, but we'll stick with that for now
   std::stringstream ss;
   ss << "size: " << g.vertices().size() << " | ";
-  g.edges().for_each([&ss](const graph::edge_t &e) {
+  g.edges().for_each([&ss](const edge_t &e) {
     ss << "(" << e.first() << ", " << e.last() << "), ";
   });
   return ss.str();

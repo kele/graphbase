@@ -9,7 +9,6 @@
 #include <iostream>
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 namespace algo {
 
@@ -52,5 +51,4 @@ bool IsBipartite(const G &g) {
 
 } // namespace algo
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase

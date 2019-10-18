@@ -7,7 +7,6 @@
 #include "graph/graph/undirected.hpp"
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 namespace algo {
 
@@ -52,5 +51,4 @@ void BFS(const G &g, unsigned start, const F &&f) {
 
 } // namespace algo
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase

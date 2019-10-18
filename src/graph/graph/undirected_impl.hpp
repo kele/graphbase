@@ -7,7 +7,6 @@
 #include <utility>
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -36,5 +35,4 @@ const std::vector<unsigned> &Graph<void, EdgeContainer>::vertices() const {
 }
 
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase

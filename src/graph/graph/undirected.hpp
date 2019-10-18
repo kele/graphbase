@@ -7,7 +7,6 @@
 #include "graph/graph/undirected_vector_edge_container.hpp"
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 
 // EmptyGraphBase should be used for every undirected graph implementation. It
@@ -58,7 +57,6 @@ private:
 using BasicGraph = Graph<void, VectorEdgeContainer<void>>;
 
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase
 
 #include "graph/graph/undirected_impl.hpp"

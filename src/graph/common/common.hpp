@@ -3,7 +3,6 @@
 #include <utility>
 
 namespace graphbase {
-namespace graph {
 
 enum class GraphType { Undirected, Directed };
 
@@ -42,5 +41,4 @@ private:
   void normalize();
 };
 
-} // namespace graph
 } // namespace graphbase

@@ -12,9 +12,8 @@
 namespace graphbase {
 namespace graphsource {
 
-using graph::GraphType;
 using graph::directed::BasicDigraph;
-using graph::undirected::BasicGraph;
+using undirected::BasicGraph;
 
 ////////////////////////////////////////////////////////////////////////////////
 // VariantGraph implementation

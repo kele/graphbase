@@ -1,7 +1,6 @@
 #include "graph/common/common.hpp"
 
 namespace graphbase {
-namespace graph {
 
 ///////////////////////////////////////////////////////////////////////////////
 // arc_t implementation
@@ -31,5 +30,4 @@ bool operator==(const edge_t &lhs, const edge_t &rhs) {
   return lhs.m_e == rhs.m_e;
 }
 
-} // namespace graph
 } // namespace graphbase

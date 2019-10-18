@@ -12,9 +12,8 @@
 namespace graphbase {
 namespace graphsource {
 
-using graph::GraphType;
 using graph::directed::BasicDigraph;
-using graph::undirected::BasicGraph;
+using undirected::BasicGraph;
 
 // VariantGraph is a wrapper around a directed or undirected graph.
 class VariantGraph {
@@ -39,11 +38,13 @@ private:
 };
 
 // GraphSource creates generators for specific graph types.
+template<class G>
 class GraphSource {
 public:
-  virtual estd::generator<VariantGraph> Graphs() const = 0;
-  virtual Kind SourceKind() const = 0;
-  virtual GraphType SourceGraphType() const = 0;
+  using GraphType = G;
+
+  virtual estd::generator<GraphType> Graphs() const = 0;
+  virtual const std::string& Label() const = 0;
   virtual ~GraphSource() = 0;
 };
 

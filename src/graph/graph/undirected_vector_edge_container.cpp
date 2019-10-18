@@ -3,7 +3,6 @@
 #include "estd/estd.hpp"
 
 namespace graphbase {
-namespace graph {
 namespace undirected {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -94,5 +93,4 @@ void VectorEdgeContainer<void>::add(edge_t e) {
 }
 
 } // namespace undirected
-} // namespace graph
 } // namespace graphbase
